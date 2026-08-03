@@ -1,0 +1,29 @@
+<div class="plugin-page">
+  <form method="post" action="index.cgi">
+    <div class="plugin-actions">
+      <a data-role="none" href="javascript:restartService();" id="btnrestart" class="plugin-button">Restart</a>
+      <a data-role="none" href="javascript:stopService();" id="btnstop" class="plugin-button plugin-button-danger">Stop</a>
+      <a data-role="none" href="/admin/system/tools/logfile.cgi?logfile=plugins/PLUGINNAME/PLUGINNAME.log&amp;header=html&amp;format=template" target="log" class="plugin-button">Log anzeigen</a>
+    </div>
+
+    <div class="plugin-card">
+      <h2>PLUGINNAME</h2>
+      <p class="plugin-muted">v3/v4-kompatibles Frontend mit eigenen Tokens und Fallbacks.</p>
+
+      <div class="plugin-grid-2">
+        <div class="plugin-field">
+          <label for="setting1"><strong>Einstellung 1</strong></label>
+          <input id="setting1" type="text" name="setting1" value="<TMPL_VAR setting1>">
+        </div>
+        <div class="plugin-field">
+          <label for="setting2"><strong>Einstellung 2</strong></label>
+          <input id="setting2" type="text" name="setting2" value="<TMPL_VAR setting2>">
+        </div>
+      </div>
+
+      <p>
+        <button data-role="none" type="submit" name="save" value="1" class="plugin-button plugin-button-primary">Speichern</button>
+      </p>
+    </div>
+  </form>
+</div>

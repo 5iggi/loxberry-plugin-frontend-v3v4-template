@@ -1,0 +1,194 @@
+/* ========================================================================
+LoxBerry Plugin v3/v4 Frontend Compatibility CSS
+Replace .plugin-page with your plugin-specific wrapper if desired.
+======================================================================== */
+
+.plugin-page {
+  --plugin-font: var(--lb-font, var(--font-family, sans-serif));
+  --plugin-text: var(--lb-text, var(--lb-color-text, #202124));
+  --plugin-muted: var(--lb-text-muted, var(--lb-color-text-muted, #5f6368));
+
+  --plugin-primary: var(--lb-btn-primary-bg, var(--lb-primary, var(--lb-color-primary, #6dac20)));
+  --plugin-primary-hover: var(--lb-primary-hover, var(--lb-btn-primary-hover-bg, #5a9a1a));
+  --plugin-primary-dark: var(--lb-primary-dark, var(--lb-primary-active, #4c7d18));
+
+  --plugin-danger: var(--lb-danger, var(--lb-color-danger, #dc2626));
+  --plugin-danger-hover: var(--lb-danger-hover, var(--lb-color-danger-hover, #b91c1c));
+
+  --plugin-btn-bg: var(--lb-btn-bg, #fff);
+  --plugin-btn-bg-hover: var(--lb-btn-hover-bg, #dcdcdc);
+  --plugin-btn-border: var(--lb-btn-border, #c0c0c0);
+  --plugin-btn-border-hover: var(--lb-btn-hover-border, #a8a8a8);
+  --plugin-btn-radius: var(--lb-btn-radius, var(--lb-radius, 4px));
+
+  --plugin-border: var(--lb-border-color, var(--lb-color-border, #d8dce0));
+  --plugin-focus-ring: rgba(109, 172, 32, .24);
+  --plugin-control-height: 40px;
+  --plugin-control-width: 360px;
+
+  box-sizing: border-box;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: .75rem;
+  color: var(--plugin-text);
+  font-family: var(--plugin-font);
+}
+
+.plugin-page *,
+.plugin-page *::before,
+.plugin-page *::after {
+  box-sizing: border-box;
+}
+
+.plugin-card {
+  margin: 0 0 1em 0;
+  padding: 14px;
+  border: 1px solid var(--plugin-border);
+  border-radius: 4px;
+  background: transparent;
+}
+
+.plugin-muted {
+  color: var(--plugin-muted);
+  font-size: .95em;
+  line-height: 1.4;
+}
+
+.plugin-grid-2 {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
+  gap: 14px 20px;
+  max-width: 980px;
+  align-items: start;
+}
+
+.plugin-field input[type="text"],
+.plugin-field input[type="password"] {
+  display: block !important;
+  width: 100% !important;
+  max-width: var(--plugin-control-width) !important;
+  min-height: var(--plugin-control-height) !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  border: 1px solid var(--plugin-border) !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: var(--plugin-text) !important;
+  text-shadow: none !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .05) !important;
+  outline: none !important;
+}
+
+.plugin-field input[type="text"]:focus,
+.plugin-field input[type="password"]:focus {
+  border-color: var(--plugin-primary) !important;
+  box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0, 0, 0, .05) !important;
+}
+
+.plugin-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 .75em 0;
+}
+
+.plugin-page .plugin-button,
+.plugin-page a.plugin-button,
+.plugin-page button.plugin-button,
+.plugin-page .ui-link.plugin-button,
+.plugin-page .ui-btn.plugin-button {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .45em !important;
+  width: auto !important;
+  min-width: 10rem !important;
+  min-height: var(--plugin-control-height) !important;
+  margin: .35em .45em .35em 0 !important;
+  padding: .55em .9em !important;
+  border: 1px solid var(--plugin-btn-border) !important;
+  border-radius: var(--plugin-btn-radius) !important;
+  background: var(--plugin-btn-bg) !important;
+  color: var(--plugin-text) !important;
+  font-family: var(--plugin-font) !important;
+  font-weight: normal !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.plugin-page .plugin-button:hover,
+.plugin-page a.plugin-button:hover,
+.plugin-page button.plugin-button:hover,
+.plugin-page .ui-link.plugin-button:hover,
+.plugin-page .ui-btn.plugin-button:hover {
+  background: var(--plugin-btn-bg-hover) !important;
+  border-color: var(--plugin-btn-border-hover) !important;
+  color: var(--plugin-text) !important;
+}
+
+.plugin-page .plugin-button-primary,
+.plugin-page a.plugin-button-primary,
+.plugin-page button.plugin-button-primary,
+.plugin-page .ui-link.plugin-button-primary,
+.plugin-page .ui-btn.plugin-button-primary {
+  background: var(--plugin-primary) !important;
+  border-color: var(--plugin-primary-dark) !important;
+  color: #fff !important;
+}
+
+.plugin-page .plugin-button-primary:hover,
+.plugin-page a.plugin-button-primary:hover,
+.plugin-page button.plugin-button-primary:hover,
+.plugin-page .ui-link.plugin-button-primary:hover,
+.plugin-page .ui-btn.plugin-button-primary:hover {
+  background: var(--plugin-primary-hover) !important;
+  border-color: var(--plugin-primary-dark) !important;
+  color: #fff !important;
+}
+
+.plugin-page .plugin-button-danger,
+.plugin-page a.plugin-button-danger,
+.plugin-page button.plugin-button-danger,
+.plugin-page .ui-link.plugin-button-danger,
+.plugin-page .ui-btn.plugin-button-danger {
+  background: var(--plugin-danger) !important;
+  border-color: var(--plugin-danger) !important;
+  color: #fff !important;
+}
+
+.plugin-page .plugin-button-danger:hover,
+.plugin-page a.plugin-button-danger:hover,
+.plugin-page button.plugin-button-danger:hover,
+.plugin-page .ui-link.plugin-button-danger:hover,
+.plugin-page .ui-btn.plugin-button-danger:hover {
+  background: var(--plugin-danger-hover) !important;
+  border-color: var(--plugin-danger-hover) !important;
+  color: #fff !important;
+}
+
+@media (max-width: 900px) {
+  .plugin-page {
+    padding: .5rem;
+  }
+
+  .plugin-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .plugin-page .plugin-button,
+  .plugin-page a.plugin-button,
+  .plugin-page button.plugin-button,
+  .plugin-field input[type="text"],
+  .plugin-field input[type="password"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
