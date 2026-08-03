@@ -21,8 +21,10 @@ This repository provides a small, neutral starting point for LoxBerry plugin fro
 - cache buster example
 - Perl CGI frontend example with robust template path handling
 - PHP frontend example using `loxberry_web.php`, `loxberry_system.php` and language files
+- horizontal LoxBerry navbar examples for Perl and PHP
 - PrimeIcons example buttons
-- Python daemon logging example with `WatchedFileHandler`
+- LoxBerry-friendly logging examples
+- optional Python daemon logging example with `WatchedFileHandler`
 - frontend release checklist
 
 ## Quick start
@@ -41,19 +43,19 @@ chmod +x scripts/check_frontend.sh
 ./scripts/check_frontend.sh .
 ```
 
-The script checks template structure, scoped CSS, common jQuery Mobile artifacts and Perl/PHP syntax where possible.
-
 ## Files to reuse
 
-- `webfrontend/html/css/plugin.css` - CSS base structure with a plugin scope, tokens and fallbacks
-- `templates/index.html` - Perl/HTML::Template example with `data-role="none"`
-- `templates/index_php.html` - PHP template example with v3/v4-compatible markup
-- `webfrontend/htmlauth/index.cgi` - minimal Perl CGI with robust template path handling and CSS injection via `$htmlhead`
-- `webfrontend/htmlauth/index.php` - PHP frontend example using LoxBerry PHP SDK modules
-- `templates/lang/language_de.ini` and `templates/lang/language_en.ini` - language examples
-- `examples/python_logging_watchedfilehandler.py` - robust Python daemon logging example
-- `scripts/check_frontend.sh` - checks for common frontend mistakes
-- `docs/de` and `docs/en` - bilingual notes and checklists
+- `webfrontend/html/css/plugin.css`
+- `templates/index.html`
+- `templates/index_php.html`
+- `webfrontend/htmlauth/index.cgi`
+- `webfrontend/htmlauth/index.php`
+- `templates/lang/language_de.ini`
+- `templates/lang/language_en.ini`
+- `postinstall.sh`
+- `postroot.sh`
+- `examples/python_logging_watchedfilehandler.py`
+- `scripts/check_frontend.sh`
 
 ## License
 

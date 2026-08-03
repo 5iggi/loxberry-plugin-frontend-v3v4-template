@@ -1,63 +1,10 @@
-<div class="lb-content plugin-page">
+<div class="lb-content plugin-page plugin-form-{{FORM}}">
 
   <section class="lb-card plugin-card plugin-hero-card">
-    <div class="plugin-actions plugin-actions-top">
-      <button type="button" class="lb-btn plugin-button" data-role="none" onclick="alert('TODO: restart action'); return false;"><i class="pi pi-refresh"></i><span>{{BUTTON.RESTART}}</span></button>
-      <button type="button" class="lb-btn plugin-button plugin-button-danger" data-role="none" onclick="alert('TODO: stop action'); return false;"><i class="pi pi-stop-circle"></i><span>{{BUTTON.STOP}}</span></button>
-      <a class="lb-btn plugin-button" data-role="none" href="index.php?showlog=plugin" target="plugin_log"><i class="pi pi-file"></i><span>{{BUTTON.LOG}}</span></a>
-    </div>
-
     <h2>{{APP.TITLE}}</h2>
     <p class="plugin-muted">{{APP.SUBTITLE}}</p>
   </section>
 
-  <section class="lb-card plugin-card">
-    <h3><i class="pi pi-cog"></i> {{CARD.SETTINGS}}</h3>
-
-    <form method="post" action="" data-role="none">
-      <div class="plugin-grid-2">
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="setting1">{{FORM.SETTING1}}</label>
-          <div class="lb-form-field">
-            <input class="lb-input" data-role="none" type="text" id="setting1" name="setting1" value="demo1">
-            <div class="plugin-help">{{HELP.TEXT}}</div>
-          </div>
-        </div>
-
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="setting2">{{FORM.SETTING2}}</label>
-          <div class="lb-form-field">
-            <input class="lb-input" data-role="none" type="password" id="setting2" name="setting2" value="demo2">
-            <div class="plugin-help">{{HELP.PASSWORD}}</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="plugin-grid-2">
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="select1">{{FORM.SELECT1}}</label>
-          <div class="lb-form-field">
-            <select class="lb-input" data-role="none" id="select1" name="select1">
-              <option>Option A</option>
-              <option>Option B</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="number1">{{FORM.NUMBER1}}</label>
-          <div class="lb-form-field">
-            <input class="lb-input" data-role="none" type="number" id="number1" name="number1" value="100">
-          </div>
-        </div>
-      </div>
-
-      <div class="plugin-actions">
-        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none"><i class="pi pi-check"></i><span>{{BUTTON.SAVE}}</span></button>
-      </div>
-    </form>
-
-    <div class="plugin-status plugin-muted">{{NOTICE}}</div>
-  </section>
+  {{CONTENT}}
 
 </div>

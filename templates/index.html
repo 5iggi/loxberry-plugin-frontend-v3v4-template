@@ -1,63 +1,57 @@
-<div class="lb-content plugin-page">
+<div class="lb-content plugin-page plugin-form-<TMPL_VAR FORM>">
 
   <section class="lb-card plugin-card plugin-hero-card">
-    <div class="plugin-actions plugin-actions-top">
-      <a class="lb-btn plugin-button" data-role="none" href="javascript:restartService();"><i class="pi pi-refresh"></i><span>Restart</span></a>
-      <a class="lb-btn plugin-button plugin-button-danger" data-role="none" href="javascript:stopService();"><i class="pi pi-stop-circle"></i><span>Stop</span></a>
-      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?showlog=plugin" target="plugin_log"><i class="pi pi-file"></i><span>Log anzeigen</span></a>
-    </div>
-
-    <h2>PLUGINNAME</h2>
-    <p class="plugin-muted">v3/v4-kompatibles Frontend mit eigenen Tokens und Fallbacks.</p>
+    <h2><TMPL_VAR APP_TITLE></h2>
+    <p class="plugin-muted"><TMPL_VAR APP_SUBTITLE></p>
   </section>
 
+<TMPL_IF FORM_MAIN>
   <section class="lb-card plugin-card">
-    <h3><i class="pi pi-cog"></i> Demo-Einstellungen</h3>
+    <h3><i class="pi pi-home"></i> <TMPL_VAR NAV_MAIN></h3>
+    <p class="plugin-muted"><TMPL_VAR MAIN_TEXT></p>
+    <div class="plugin-actions">
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=settings"><i class="pi pi-cog"></i><span><TMPL_VAR NAV_SETTINGS></span></a>
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=log"><i class="pi pi-file"></i><span><TMPL_VAR NAV_LOG></span></a>
+    </div>
+  </section>
+</TMPL_IF>
 
-    <form method="post" action="" data-role="none">
+<TMPL_IF FORM_SETTINGS>
+  <section class="lb-card plugin-card">
+    <h3><i class="pi pi-cog"></i> <TMPL_VAR CARD_SETTINGS></h3>
+    <form method="post" action="index.cgi?form=settings" data-role="none">
       <div class="plugin-grid-2">
         <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="setting1">Einstellung 1</label>
+          <label class="lb-form-label" for="setting1"><TMPL_VAR FORM_SETTING1></label>
           <div class="lb-form-field">
             <input class="lb-input" data-role="none" type="text" name="setting1" id="setting1" value="<TMPL_VAR setting1>">
-            <div class="plugin-help">Kurzer Hilfetext für ein Textfeld.</div>
+            <div class="plugin-help"><TMPL_VAR HELP_TEXT></div>
           </div>
         </div>
-
         <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="setting2">Einstellung 2</label>
+          <label class="lb-form-label" for="setting2"><TMPL_VAR FORM_SETTING2></label>
           <div class="lb-form-field">
             <input class="lb-input" data-role="none" type="password" name="setting2" id="setting2" value="<TMPL_VAR setting2>">
-            <div class="plugin-help">Beispiel für ein Passwortfeld.</div>
+            <div class="plugin-help"><TMPL_VAR HELP_PASSWORD></div>
           </div>
         </div>
       </div>
-
-      <div class="plugin-grid-2">
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="select1">Auswahl</label>
-          <div class="lb-form-field">
-            <select class="lb-input" data-role="none" name="select1" id="select1">
-              <option>Option A</option>
-              <option>Option B</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="plugin-field lb-form-row">
-          <label class="lb-form-label" for="number1">Nummer</label>
-          <div class="lb-form-field">
-            <input class="lb-input" data-role="none" type="number" name="number1" id="number1" value="100">
-          </div>
-        </div>
-      </div>
-
       <div class="plugin-actions">
-        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none"><i class="pi pi-check"></i><span>Speichern</span></button>
+        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none"><i class="pi pi-check"></i><span><TMPL_VAR BUTTON_SAVE></span></button>
       </div>
     </form>
-
     <div class="plugin-status plugin-muted"><TMPL_VAR notice></div>
   </section>
+</TMPL_IF>
+
+<TMPL_IF FORM_LOG>
+  <section class="lb-card plugin-card">
+    <h3><i class="pi pi-file"></i> <TMPL_VAR NAV_LOG></h3>
+    <p class="plugin-muted"><TMPL_VAR LOG_TEXT></p>
+    <div class="plugin-actions">
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?showlog=plugin" target="plugin_log"><i class="pi pi-external-link"></i><span><TMPL_VAR BUTTON_OPEN_LOG></span></a>
+    </div>
+  </section>
+</TMPL_IF>
 
 </div>

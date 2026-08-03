@@ -1,9 +1,3 @@
-/* ========================================================================
-   LoxBerry Plugin v3/v4 Frontend Compatibility CSS
-   Replace .plugin-page with your plugin-specific wrapper if desired.
-   ======================================================================== */
-
-/* 01 Theme aliases / LoxBerry v4 tokens with v3 fallbacks */
 .plugin-page {
   --plugin-font: var(--lb-font, var(--font-family, sans-serif));
   --plugin-text: var(--lb-text, var(--lb-color-text, #202124));
@@ -22,10 +16,6 @@
   --plugin-focus-ring: rgba(109, 172, 32, .24);
   --plugin-control-height: 40px;
   --plugin-control-width: 360px;
-}
-
-/* 02 Base / layout */
-.plugin-page {
   box-sizing: border-box;
   max-width: 1080px;
   margin: 0 auto;
@@ -33,200 +23,18 @@
   color: var(--plugin-text);
   font-family: var(--plugin-font);
 }
-
-.plugin-page *,
-.plugin-page *::before,
-.plugin-page *::after {
-  box-sizing: border-box;
-}
-
-.plugin-muted,
-.plugin-help {
-  color: var(--plugin-muted);
-  font-size: .95em;
-  line-height: 1.4;
-}
-
-.plugin-help {
-  margin-top: .35em;
-}
-
-/* 03 Cards */
-.plugin-card {
-  margin: 0 0 1em 0;
-  padding: 14px;
-  border: 1px solid var(--plugin-border);
-  border-radius: 4px;
-  background: transparent;
-}
-
-.plugin-hero-card h2 {
-  margin-top: .25em;
-}
-
-/* 04 Grid / form layout */
-.plugin-grid-2 {
-  display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
-  gap: 14px 20px;
-  max-width: 980px;
-  align-items: start;
-  margin-bottom: .75em;
-}
-
-.plugin-field input[type="text"],
-.plugin-field input[type="password"],
-.plugin-field input[type="number"],
-.plugin-field select,
-.plugin-field textarea {
-  display: block !important;
-  width: 100% !important;
-  max-width: var(--plugin-control-width) !important;
-  min-height: var(--plugin-control-height) !important;
-  margin: 0 !important;
-  padding: 8px 10px !important;
-  border: 1px solid var(--plugin-border) !important;
-  border-radius: 4px !important;
-  background: #fff !important;
-  color: var(--plugin-text) !important;
-  text-shadow: none !important;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .05) !important;
-  outline: none !important;
-}
-
-.plugin-field input[type="text"]:focus,
-.plugin-field input[type="password"]:focus,
-.plugin-field input[type="number"]:focus,
-.plugin-field select:focus,
-.plugin-field textarea:focus {
-  border-color: var(--plugin-primary) !important;
-  box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0, 0, 0, .05) !important;
-}
-
-/* 05 Actions / buttons */
-.plugin-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 .75em 0;
-}
-
-.plugin-actions-top {
-  justify-content: flex-start;
-}
-
-.plugin-page .plugin-button,
-.plugin-page a.plugin-button,
-.plugin-page button.plugin-button,
-.plugin-page .ui-link.plugin-button,
-.plugin-page .ui-btn.plugin-button {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: .45em !important;
-  width: auto !important;
-  min-width: 10rem !important;
-  min-height: var(--plugin-control-height) !important;
-  margin: .35em .45em .35em 0 !important;
-  padding: .55em .9em !important;
-  border: 1px solid var(--plugin-btn-border) !important;
-  border-radius: var(--plugin-btn-radius) !important;
-  background: var(--plugin-btn-bg) !important;
-  color: var(--plugin-text) !important;
-  font-family: var(--plugin-font) !important;
-  font-weight: normal !important;
-  line-height: 1.3 !important;
-  text-align: center !important;
-  text-decoration: none !important;
-  text-shadow: none !important;
-  cursor: pointer !important;
-  box-shadow: none !important;
-  background-image: none !important;
-}
-
-.plugin-page .plugin-button:hover,
-.plugin-page a.plugin-button:hover,
-.plugin-page button.plugin-button:hover,
-.plugin-page .ui-link.plugin-button:hover,
-.plugin-page .ui-btn.plugin-button:hover {
-  background: var(--plugin-btn-bg-hover) !important;
-  border-color: var(--plugin-btn-border-hover) !important;
-  color: var(--plugin-text) !important;
-}
-
-.plugin-page .plugin-button-primary,
-.plugin-page a.plugin-button-primary,
-.plugin-page button.plugin-button-primary,
-.plugin-page .ui-link.plugin-button-primary,
-.plugin-page .ui-btn.plugin-button-primary {
-  background: var(--plugin-primary) !important;
-  border-color: var(--plugin-primary-dark) !important;
-  color: #fff !important;
-}
-
-.plugin-page .plugin-button-primary:hover,
-.plugin-page a.plugin-button-primary:hover,
-.plugin-page button.plugin-button-primary:hover,
-.plugin-page .ui-link.plugin-button-primary:hover,
-.plugin-page .ui-btn.plugin-button-primary:hover {
-  background: var(--plugin-primary-hover) !important;
-  border-color: var(--plugin-primary-dark) !important;
-  color: #fff !important;
-}
-
-.plugin-page .plugin-button-danger,
-.plugin-page a.plugin-button-danger,
-.plugin-page button.plugin-button-danger,
-.plugin-page .ui-link.plugin-button-danger,
-.plugin-page .ui-btn.plugin-button-danger {
-  background: var(--plugin-danger) !important;
-  border-color: var(--plugin-danger) !important;
-  color: #fff !important;
-}
-
-.plugin-page .plugin-button-danger:hover,
-.plugin-page a.plugin-button-danger:hover,
-.plugin-page button.plugin-button-danger:hover,
-.plugin-page .ui-link.plugin-button-danger:hover,
-.plugin-page .ui-btn.plugin-button-danger:hover {
-  background: var(--plugin-danger-hover) !important;
-  border-color: var(--plugin-danger-hover) !important;
-  color: #fff !important;
-}
-
-.plugin-page .plugin-button .pi,
-.plugin-page .plugin-card h3 .pi {
-  line-height: 1;
-}
-
-/* 06 jQuery Mobile compatibility guards */
-.plugin-page .ui-btn,
-.plugin-page .ui-link {
-  text-shadow: none !important;
-}
-
-/* 07 Responsive */
-@media (max-width: 900px) {
-  .plugin-page {
-    padding: .5rem;
-  }
-
-  .plugin-grid-2 {
-    grid-template-columns: 1fr;
-  }
-
-  .plugin-page .plugin-button,
-  .plugin-page a.plugin-button,
-  .plugin-page button.plugin-button,
-  .plugin-field input[type="text"],
-  .plugin-field input[type="password"],
-  .plugin-field input[type="number"],
-  .plugin-field select,
-  .plugin-field textarea {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-}
+.plugin-page *, .plugin-page *::before, .plugin-page *::after { box-sizing: border-box; }
+.plugin-muted, .plugin-help { color: var(--plugin-muted); font-size: .95em; line-height: 1.4; }
+.plugin-help { margin-top: .35em; }
+.plugin-card { margin: 0 0 1em 0; padding: 14px; border: 1px solid var(--plugin-border); border-radius: 4px; background: transparent; }
+.plugin-grid-2 { display: grid; grid-template-columns: minmax(260px,1fr) minmax(260px,1fr); gap: 14px 20px; max-width: 980px; align-items: start; margin-bottom: .75em; }
+.plugin-field input[type="text"], .plugin-field input[type="password"], .plugin-field input[type="number"], .plugin-field select, .plugin-field textarea { display: block !important; width: 100% !important; max-width: var(--plugin-control-width) !important; min-height: var(--plugin-control-height) !important; margin: 0 !important; padding: 8px 10px !important; border: 1px solid var(--plugin-border) !important; border-radius: 4px !important; background: #fff !important; color: var(--plugin-text) !important; text-shadow: none !important; box-shadow: inset 0 1px 2px rgba(0,0,0,.05) !important; outline: none !important; }
+.plugin-field input:focus, .plugin-field select:focus, .plugin-field textarea:focus { border-color: var(--plugin-primary) !important; box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0,0,0,.05) !important; }
+.plugin-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 .75em 0; }
+.plugin-page .plugin-button, .plugin-page a.plugin-button, .plugin-page button.plugin-button, .plugin-page .ui-link.plugin-button, .plugin-page .ui-btn.plugin-button { appearance: none !important; -webkit-appearance: none !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: .45em !important; width: auto !important; min-width: 10rem !important; min-height: var(--plugin-control-height) !important; margin: .35em .45em .35em 0 !important; padding: .55em .9em !important; border: 1px solid var(--plugin-btn-border) !important; border-radius: var(--plugin-btn-radius) !important; background: var(--plugin-btn-bg) !important; color: var(--plugin-text) !important; line-height: 1.3 !important; text-decoration: none !important; text-shadow: none !important; cursor: pointer !important; box-shadow: none !important; background-image: none !important; }
+.plugin-page .plugin-button:hover { background: var(--plugin-btn-bg-hover) !important; border-color: var(--plugin-btn-border-hover) !important; }
+.plugin-page .plugin-button-primary { background: var(--plugin-primary) !important; border-color: var(--plugin-primary-dark) !important; color: #fff !important; }
+.plugin-page .plugin-button-danger { background: var(--plugin-danger) !important; border-color: var(--plugin-danger) !important; color: #fff !important; }
+.plugin-page .plugin-button .pi, .plugin-page .plugin-card h3 .pi { line-height: 1; }
+.plugin-page .ui-btn, .plugin-page .ui-link { text-shadow: none !important; }
+@media (max-width: 900px) { .plugin-page { padding: .5rem; } .plugin-grid-2 { grid-template-columns: 1fr; } .plugin-page .plugin-button, .plugin-page a.plugin-button, .plugin-page button.plugin-button, .plugin-field input[type="text"], .plugin-field input[type="password"], .plugin-field input[type="number"], .plugin-field select, .plugin-field textarea { width: 100% !important; max-width: 100% !important; } }

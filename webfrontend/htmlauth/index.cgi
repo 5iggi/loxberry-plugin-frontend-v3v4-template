@@ -10,20 +10,6 @@ use LoxBerry::Web;
 
 my $cgi = CGI->new;
 
-if ($cgi->param('showlog')) {
-    my $viewer_path = plugin_ensure_logfile($cgi->param('showlog'));
-    print $cgi->redirect('/admin/system/tools/logfile.cgi?logfile=' . $viewer_path . '&header=html&format=template');
-    exit;
-}
-
-sub plugin_trim {
-    my ($v) = @_;
-    $v = '' if !defined $v;
-    $v =~ s/^\s+//;
-    $v =~ s/\s+$//;
-    return $v;
-}
-
 sub plugin_folder {
     my ($folder) = $Bin =~ m{/plugins/([^/]+)$};
     return $folder || 'PLUGINNAME';
@@ -43,7 +29,15 @@ sub plugin_template_path {
     die "Template file not found: $name. Checked: " . join(', ', @candidates) . "\n";
 }
 
-sub plugin_log_path {
+sub plugin_trim {
+    my ($v) = @_;
+    $v = '' if !defined $v;
+    $v =~ s/^\s+//;
+    $v =~ s/\s+$//;
+    return $v;
+}
+
+sub plugin_ensure_logfile {
     my ($name) = @_;
     my $folder = plugin_folder();
     $name ||= $folder;
@@ -52,23 +46,54 @@ sub plugin_log_path {
     $name = $folder if $name eq '';
     my $logdir = "/opt/loxberry/log/plugins/$folder";
     my $logfile = "$logdir/$name.log";
-    return ($logdir, $logfile, "plugins/$folder/$name.log");
-}
-
-sub plugin_ensure_logfile {
-    my ($name) = @_;
-    my ($logdir, $logfile, $viewer_path) = plugin_log_path($name);
-    if (!-d $logdir) {
-        mkdir $logdir, 0775;
-    }
-    if (!-e $logfile) {
-        open my $fh, '>>', $logfile;
-        close $fh if $fh;
-    }
+    mkdir $logdir, 0775 if !-d $logdir;
+    if (!-e $logfile) { open my $fh, '>>', $logfile; close $fh if $fh; }
     chmod 0664, $logfile if -e $logfile;
-    return $viewer_path;
+    return "plugins/$folder/$name.log";
 }
 
+if ($cgi->param('showlog')) {
+    my $viewer_path = plugin_ensure_logfile($cgi->param('showlog'));
+    print $cgi->redirect('/admin/system/tools/logfile.cgi?logfile=' . $viewer_path . '&header=html&format=template');
+    exit;
+}
+
+my %L = (
+    APP_TITLE       => 'PLUGINNAME',
+    APP_SUBTITLE    => 'v3/v4-kompatibles Plugin-Frontend mit LoxBerry-Menü, PrimeIcons und Fallback-CSS.',
+    NAV_MAIN        => 'Übersicht',
+    NAV_SETTINGS    => 'Einstellungen',
+    NAV_LOG         => 'Log',
+    CARD_SETTINGS   => 'Demo-Einstellungen',
+    FORM_SETTING1   => 'Einstellung 1',
+    FORM_SETTING2   => 'Einstellung 2',
+    HELP_TEXT       => 'Kurzer Hilfetext für ein Textfeld.',
+    HELP_PASSWORD   => 'Beispiel für ein Passwortfeld.',
+    BUTTON_SAVE     => 'Speichern',
+    BUTTON_OPEN_LOG => 'Log öffnen',
+    MAIN_TEXT       => 'Dies ist die Startseite der Demo. Das horizontale LoxBerry-Menü wird über die LoxBerry Navbar-Funktion erzeugt.',
+    LOG_TEXT        => 'Die Logdatei wird vor dem Öffnen sichergestellt und anschließend im LoxBerry Log Viewer geöffnet.',
+);
+
+my $form = plugin_trim($cgi->param('form')) || 'main';
+$form = 'main' if $form !~ /^(main|settings|log)$/;
+
+my $notice = '';
+if ($cgi->param('save')) {
+    my $setting1 = plugin_trim($cgi->param('setting1'));
+    my $setting2 = plugin_trim($cgi->param('setting2'));
+    $notice = "Gespeichert: $setting1 / $setting2";
+}
+
+my $folder = plugin_folder();
+our @navbar = (
+    { Name => $L{NAV_MAIN},     URL => 'index.cgi?form=main',     active => ($form eq 'main' ? 1 : 0) },
+    { Name => $L{NAV_SETTINGS}, URL => 'index.cgi?form=settings', active => ($form eq 'settings' ? 1 : 0) },
+    { Name => $L{NAV_LOG},      URL => 'index.cgi?form=log',      active => ($form eq 'log' ? 1 : 0) },
+);
+
+our $htmlhead = qq{<link rel="stylesheet" href="/plugins/$folder/css/plugin.css?v=100">\n};
+LoxBerry::Web::lbheader($L{APP_TITLE}, 'https://wiki.loxberry.de', 'help.html');
 
 my $template = HTML::Template->new(
     filename          => plugin_template_path('index.html'),
@@ -76,27 +101,15 @@ my $template = HTML::Template->new(
     die_on_bad_params => 0,
     utf8              => 1,
 );
-
-my $notice = '';
-if ($cgi->param('save')) {
-    my $setting1 = plugin_trim($cgi->param('setting1'));
-    my $setting2 = plugin_trim($cgi->param('setting2'));
-    # TODO: save configuration
-    $notice = "Saved: $setting1 / $setting2";
-}
-
+$template->param(%L);
 $template->param(
-    setting1 => 'demo1',
-    setting2 => 'demo2',
-    notice   => $notice,
+    FORM          => $form,
+    FORM_MAIN     => ($form eq 'main' ? 1 : 0),
+    FORM_SETTINGS => ($form eq 'settings' ? 1 : 0),
+    FORM_LOG      => ($form eq 'log' ? 1 : 0),
+    setting1      => 'demo1',
+    setting2      => 'demo2',
+    notice        => $notice,
 );
-
-my $folder       = plugin_folder();
-my $plugintitle  = 'PLUGINNAME';
-my $helplink     = 'https://wiki.loxberry.de';
-my $helptemplate = 'help.html';
-
-our $htmlhead = qq{<link rel="stylesheet" href="/plugins/$folder/css/plugin.css?v=100">\n};
-LoxBerry::Web::lbheader($plugintitle, $helplink, $helptemplate);
 print $template->output();
 LoxBerry::Web::lbfooter();
