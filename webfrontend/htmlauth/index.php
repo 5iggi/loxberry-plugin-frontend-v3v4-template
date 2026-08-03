@@ -23,6 +23,9 @@ function plugin_php_folder() {
 
 function plugin_ensure_logfile($name = '') {
     $folder = plugin_php_folder();
+    if ((string)$name === 'plugin') {
+        $name = $folder;
+    }
     $name = preg_replace('/[^A-Za-z0-9_.-]/', '', (string)$name);
     if ($name === '') {
         $name = $folder;

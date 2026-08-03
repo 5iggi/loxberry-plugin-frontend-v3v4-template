@@ -47,6 +47,7 @@ sub plugin_log_path {
     my ($name) = @_;
     my $folder = plugin_folder();
     $name ||= $folder;
+    $name = $folder if $name eq 'plugin';
     $name =~ s/[^A-Za-z0-9_.-]//g;
     $name = $folder if $name eq '';
     my $logdir = "/opt/loxberry/log/plugins/$folder";

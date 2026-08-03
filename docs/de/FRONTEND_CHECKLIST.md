@@ -6,7 +6,7 @@
 - Eigene Buttons und Button-Links haben `data-role="none"`.
 - Wiederkehrende Styles sind in CSS ausgelagert.
 - Links öffnen nur gezielt neue Tabs oder Fenster.
-- Loglink über `index.cgi?showlog=...` oder `index.php?showlog=...` prüfen.
+- Loglink über `index.cgi?showlog=plugin` oder `index.php?showlog=plugin` prüfen.
 - Demo-Buttons verwenden PrimeIcons, z. B. `<i class="pi pi-check"></i>`.
 
 ## CSS
