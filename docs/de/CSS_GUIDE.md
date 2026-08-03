@@ -13,9 +13,7 @@ Jedes Plugin sollte einen eigenen Wrapper haben:
 Alle CSS-Regeln sollten auf diesen Scope begrenzt werden:
 
 ```css
-.plugin-page .plugin-button {
-  ...
-}
+.plugin-page .plugin-button { ... }
 ```
 
 So werden andere LoxBerry-Seiten und andere Plugins nicht beeinflusst.
@@ -40,24 +38,33 @@ Damit nutzt LoxBerry v4 vorhandene Tokens und LoxBerry v3 stabile Fallback-Werte
 Eigene Buttons sollten so aussehen:
 
 ```html
-<a data-role="none" class="plugin-button plugin-button-danger" href="#">Stop</a>
-<button data-role="none" class="plugin-button plugin-button-primary">Speichern</button>
+<button class="lb-btn plugin-button" data-role="none">Speichern</button>
 ```
 
 `data-role="none"` verhindert, dass jQuery Mobile die Buttons erneut gestaltet.
 
-## 4. CSS ueber htmlhead laden
+## 4. CSS über htmlhead laden
+
+Perl:
 
 ```perl
 our $htmlhead = qq{<link rel="stylesheet" href="/plugins/PLUGINNAME/css/plugin.css?v=100">\n};
 LoxBerry::Web::lbheader($plugintitle, $helplink, $helptemplate);
 ```
 
+PHP:
+
+```php
+$cssHref = '/plugins/' . rawurlencode(LBPPLUGINDIR) . '/css/plugin.css?v=100';
+$htmlhead = '<link rel="stylesheet" href="' . h($cssHref) . '">' . "\n";
+LBWeb::lbheader($title, $helpUrl, $helpTemplate);
+```
+
 Wichtig: `$htmlhead` muss vor `lbheader()` gesetzt werden.
 
 ## 5. Cachebuster pflegen
 
-Bei jeder sichtbaren CSS-Aenderung hochzaehlen:
+Bei jeder sichtbaren CSS-Änderung hochzählen:
 
 ```text
 v=100

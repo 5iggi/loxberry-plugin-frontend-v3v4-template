@@ -1,0 +1,38 @@
+<div class="lb-content plugin-page">
+
+  <section class="lb-card plugin-card">
+    <div class="plugin-actions">
+      <button type="button" class="lb-btn plugin-button" data-role="none" onclick="alert('TODO: restart action'); return false;">{{BUTTON.RESTART}}</button>
+      <button type="button" class="lb-btn plugin-button plugin-button-danger" data-role="none" onclick="alert('TODO: stop action'); return false;">{{BUTTON.STOP}}</button>
+      <a class="lb-btn plugin-button" data-role="none" href="{{LOG_URL}}" target="plugin_log">{{BUTTON.LOG}}</a>
+    </div>
+
+    <h2>{{APP.TITLE}}</h2>
+    <p class="plugin-muted">{{APP.SUBTITLE}}</p>
+
+    <form method="post" action="" data-role="none">
+      <div class="plugin-grid-2">
+        <div class="plugin-field lb-form-row">
+          <label class="lb-form-label" for="setting1">{{FORM.SETTING1}}</label>
+          <div class="lb-form-field">
+            <input class="lb-input" data-role="none" type="text" id="setting1" name="setting1" value="demo1">
+          </div>
+        </div>
+
+        <div class="plugin-field lb-form-row">
+          <label class="lb-form-label" for="setting2">{{FORM.SETTING2}}</label>
+          <div class="lb-form-field">
+            <input class="lb-input" data-role="none" type="text" id="setting2" name="setting2" value="demo2">
+          </div>
+        </div>
+      </div>
+
+      <div class="plugin-actions">
+        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none">{{BUTTON.SAVE}}</button>
+      </div>
+    </form>
+
+    <div class="plugin-muted">{{NOTICE}}</div>
+  </section>
+
+</div>

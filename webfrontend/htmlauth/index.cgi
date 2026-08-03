@@ -28,7 +28,7 @@ my $notice = '';
 if ($cgi->param('save')) {
     my $setting1 = plugin_trim($cgi->param('setting1'));
     my $setting2 = plugin_trim($cgi->param('setting2'));
-    # TODO: Config speichern
+    # TODO: save configuration
     $notice = "Saved: $setting1 / $setting2";
 }
 

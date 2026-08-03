@@ -1,31 +1,31 @@
 /* ========================================================================
-LoxBerry Plugin v3/v4 Frontend Compatibility CSS
-Replace .plugin-page with your plugin-specific wrapper if desired.
-======================================================================== */
+   LoxBerry Plugin v3/v4 Frontend Compatibility CSS
+   Replace .plugin-page with your plugin-specific wrapper if desired.
+   ======================================================================== */
 
+/* 01 Theme aliases / LoxBerry v4 tokens with v3 fallbacks */
 .plugin-page {
   --plugin-font: var(--lb-font, var(--font-family, sans-serif));
   --plugin-text: var(--lb-text, var(--lb-color-text, #202124));
   --plugin-muted: var(--lb-text-muted, var(--lb-color-text-muted, #5f6368));
-
   --plugin-primary: var(--lb-btn-primary-bg, var(--lb-primary, var(--lb-color-primary, #6dac20)));
   --plugin-primary-hover: var(--lb-primary-hover, var(--lb-btn-primary-hover-bg, #5a9a1a));
   --plugin-primary-dark: var(--lb-primary-dark, var(--lb-primary-active, #4c7d18));
-
   --plugin-danger: var(--lb-danger, var(--lb-color-danger, #dc2626));
   --plugin-danger-hover: var(--lb-danger-hover, var(--lb-color-danger-hover, #b91c1c));
-
   --plugin-btn-bg: var(--lb-btn-bg, #fff);
   --plugin-btn-bg-hover: var(--lb-btn-hover-bg, #dcdcdc);
   --plugin-btn-border: var(--lb-btn-border, #c0c0c0);
   --plugin-btn-border-hover: var(--lb-btn-hover-border, #a8a8a8);
   --plugin-btn-radius: var(--lb-btn-radius, var(--lb-radius, 4px));
-
   --plugin-border: var(--lb-border-color, var(--lb-color-border, #d8dce0));
   --plugin-focus-ring: rgba(109, 172, 32, .24);
   --plugin-control-height: 40px;
   --plugin-control-width: 360px;
+}
 
+/* 02 Base / layout */
+.plugin-page {
   box-sizing: border-box;
   max-width: 1080px;
   margin: 0 auto;
@@ -40,6 +40,13 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
   box-sizing: border-box;
 }
 
+.plugin-muted {
+  color: var(--plugin-muted);
+  font-size: .95em;
+  line-height: 1.4;
+}
+
+/* 03 Cards */
 .plugin-card {
   margin: 0 0 1em 0;
   padding: 14px;
@@ -48,12 +55,7 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
   background: transparent;
 }
 
-.plugin-muted {
-  color: var(--plugin-muted);
-  font-size: .95em;
-  line-height: 1.4;
-}
-
+/* 04 Grid / form layout */
 .plugin-grid-2 {
   display: grid;
   grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
@@ -63,7 +65,10 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
 }
 
 .plugin-field input[type="text"],
-.plugin-field input[type="password"] {
+.plugin-field input[type="password"],
+.plugin-field input[type="number"],
+.plugin-field select,
+.plugin-field textarea {
   display: block !important;
   width: 100% !important;
   max-width: var(--plugin-control-width) !important;
@@ -80,11 +85,15 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
 }
 
 .plugin-field input[type="text"]:focus,
-.plugin-field input[type="password"]:focus {
+.plugin-field input[type="password"]:focus,
+.plugin-field input[type="number"]:focus,
+.plugin-field select:focus,
+.plugin-field textarea:focus {
   border-color: var(--plugin-primary) !important;
   box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0, 0, 0, .05) !important;
 }
 
+/* 05 Actions / buttons */
 .plugin-actions {
   display: flex;
   align-items: center;
@@ -174,6 +183,13 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
   color: #fff !important;
 }
 
+/* 06 jQuery Mobile compatibility guards */
+.plugin-page .ui-btn,
+.plugin-page .ui-link {
+  text-shadow: none !important;
+}
+
+/* 07 Responsive */
 @media (max-width: 900px) {
   .plugin-page {
     padding: .5rem;
@@ -187,7 +203,10 @@ Replace .plugin-page with your plugin-specific wrapper if desired.
   .plugin-page a.plugin-button,
   .plugin-page button.plugin-button,
   .plugin-field input[type="text"],
-  .plugin-field input[type="password"] {
+  .plugin-field input[type="password"],
+  .plugin-field input[type="number"],
+  .plugin-field select,
+  .plugin-field textarea {
     width: 100% !important;
     max-width: 100% !important;
   }

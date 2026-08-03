@@ -2,7 +2,7 @@
 
 ## Web frontend
 
-CGI warnings are written to the Apache log. Frequent AJAX calls can quickly create many log entries.
+CGI or PHP warnings are written to the Apache log. Frequent AJAX calls can quickly create many log entries.
 
 Avoid generic helper names:
 
@@ -24,7 +24,6 @@ Recommended:
 
 ```python
 from logging.handlers import WatchedFileHandler
-
 handler = WatchedFileHandler(logfile, mode="a", encoding="utf-8")
 ```
 

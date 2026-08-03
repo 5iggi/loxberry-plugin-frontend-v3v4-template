@@ -1,29 +1,38 @@
-<div class="plugin-page">
-  <form method="post" action="index.cgi">
+<div class="lb-content plugin-page">
+
+  <section class="lb-card plugin-card">
     <div class="plugin-actions">
-      <a data-role="none" href="javascript:restartService();" id="btnrestart" class="plugin-button">Restart</a>
-      <a data-role="none" href="javascript:stopService();" id="btnstop" class="plugin-button plugin-button-danger">Stop</a>
-      <a data-role="none" href="/admin/system/tools/logfile.cgi?logfile=plugins/PLUGINNAME/PLUGINNAME.log&amp;header=html&amp;format=template" target="log" class="plugin-button">Log anzeigen</a>
+      <a class="lb-btn plugin-button" data-role="none" href="javascript:restartService();">Restart</a>
+      <a class="lb-btn plugin-button plugin-button-danger" data-role="none" href="javascript:stopService();">Stop</a>
+      <a class="lb-btn plugin-button" data-role="none" href="/admin/system/tools/logfile.cgi?logfile=plugins/PLUGINNAME/PLUGINNAME.log&amp;header=html&amp;format=template" target="plugin_log">Log anzeigen</a>
     </div>
 
-    <div class="plugin-card">
-      <h2>PLUGINNAME</h2>
-      <p class="plugin-muted">v3/v4-kompatibles Frontend mit eigenen Tokens und Fallbacks.</p>
+    <h2>PLUGINNAME</h2>
+    <p class="plugin-muted">v3/v4-kompatibles Frontend mit eigenen Tokens und Fallbacks.</p>
 
+    <form method="post" action="" data-role="none">
       <div class="plugin-grid-2">
-        <div class="plugin-field">
-          <label for="setting1"><strong>Einstellung 1</strong></label>
-          <input id="setting1" type="text" name="setting1" value="<TMPL_VAR setting1>">
+        <div class="plugin-field lb-form-row">
+          <label class="lb-form-label" for="setting1">Einstellung 1</label>
+          <div class="lb-form-field">
+            <input class="lb-input" data-role="none" type="text" name="setting1" id="setting1" value="<TMPL_VAR setting1>">
+          </div>
         </div>
-        <div class="plugin-field">
-          <label for="setting2"><strong>Einstellung 2</strong></label>
-          <input id="setting2" type="text" name="setting2" value="<TMPL_VAR setting2>">
+
+        <div class="plugin-field lb-form-row">
+          <label class="lb-form-label" for="setting2">Einstellung 2</label>
+          <div class="lb-form-field">
+            <input class="lb-input" data-role="none" type="text" name="setting2" id="setting2" value="<TMPL_VAR setting2>">
+          </div>
         </div>
       </div>
 
-      <p>
-        <button data-role="none" type="submit" name="save" value="1" class="plugin-button plugin-button-primary">Speichern</button>
-      </p>
-    </div>
-  </form>
+      <div class="plugin-actions">
+        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none">Speichern</button>
+      </div>
+    </form>
+
+    <div class="plugin-muted"><TMPL_VAR notice></div>
+  </section>
+
 </div>

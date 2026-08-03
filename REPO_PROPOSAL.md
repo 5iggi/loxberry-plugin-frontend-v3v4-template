@@ -1,25 +1,24 @@
-# Repository-Vorschlag
+# Repository proposal
 
-## Empfohlener Name
+## Recommended name
 
-```text
-loxberry-plugin-frontend-v3v4-template
-```
+`loxberry-plugin-frontend-v3v4-template`
 
-## Kurzbeschreibung
+## Short description
 
-```text
-Reusable LoxBerry plugin frontend template with v3/v4 compatible CSS, scoped tokens, jQuery Mobile guards and daemon logging notes.
-```
+Reusable LoxBerry plugin frontend template with v3/v4 compatible CSS, scoped tokens, jQuery Mobile guards, Perl/PHP examples and daemon logging notes.
 
 ## Topics
 
 ```text
 loxberry
 loxberry-plugin
+loxberry-v3
 loxberry-v4
 jquery-mobile
 css-template
+php
+perl
 smart-home
 ```
 
@@ -33,5 +32,5 @@ examples
 ## Releases
 
 - `v0.1.0`: Initial template
-- `v0.2.0`: Beispiele für Perl/PHP erweitern
-- `v0.3.0`: Optionales reines LoxBerry-v4-`nojqm` Template ergänzen
+- `v0.2.0`: Extended Perl/PHP examples
+- `v0.3.0`: Optional pure LoxBerry v4 nojqm template

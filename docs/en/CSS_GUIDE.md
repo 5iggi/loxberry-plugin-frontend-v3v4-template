@@ -13,9 +13,7 @@ Every plugin should have a unique wrapper:
 All CSS rules should be scoped below that wrapper:
 
 ```css
-.plugin-page .plugin-button {
-  ...
-}
+.plugin-page .plugin-button { ... }
 ```
 
 This prevents accidental changes to LoxBerry system pages or other plugins.
@@ -40,17 +38,26 @@ This lets LoxBerry v4 use existing tokens and gives LoxBerry v3 stable fallback 
 Custom buttons should look like this:
 
 ```html
-<a data-role="none" class="plugin-button plugin-button-danger" href="#">Stop</a>
-<button data-role="none" class="plugin-button plugin-button-primary">Save</button>
+<button class="lb-btn plugin-button" data-role="none">Save</button>
 ```
 
 `data-role="none"` prevents jQuery Mobile from restyling these buttons.
 
 ## 4. Load CSS via htmlhead
 
+Perl:
+
 ```perl
 our $htmlhead = qq{<link rel="stylesheet" href="/plugins/PLUGINNAME/css/plugin.css?v=100">\n};
 LoxBerry::Web::lbheader($plugintitle, $helplink, $helptemplate);
+```
+
+PHP:
+
+```php
+$cssHref = '/plugins/' . rawurlencode(LBPPLUGINDIR) . '/css/plugin.css?v=100';
+$htmlhead = '<link rel="stylesheet" href="' . h($cssHref) . '">' . "\n";
+LBWeb::lbheader($title, $helpUrl, $helpTemplate);
 ```
 
 Important: `$htmlhead` must be set before `lbheader()` is called.
