@@ -33,11 +33,14 @@ This repository provides a small, neutral starting point for LoxBerry plugin fro
    - PHP: `webfrontend/htmlauth/index.php` with `templates/index_php.html`
 4. Adapt `webfrontend/html/css/plugin.css`.
 5. Load your CSS from the frontend via `$htmlhead` before calling `lbheader()`.
-6. Run:
+6. Run the frontend check:
 
 ```bash
+chmod +x scripts/check_frontend.sh
 ./scripts/check_frontend.sh .
 ```
+
+The script checks template structure, scoped CSS, common jQuery Mobile artifacts and Perl/PHP syntax where possible.
 
 ## Files to reuse
 

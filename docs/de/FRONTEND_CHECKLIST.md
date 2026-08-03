@@ -31,6 +31,55 @@
 - `LBSystem::readlanguage("language.ini")` für Sprachdateien nutzen.
 - PHP-Syntax mit `php -l index.php` prüfen, wenn `php-cli` verfügbar ist.
 
+## Automatischer Frontend-Check
+
+Das Repository enthält ein Hilfsscript:
+
+```bash
+scripts/check_frontend.sh
+```
+
+Das Script prüft typische Fehler in der Frontend-Struktur, in Templates und in der CSS-Datei.
+
+### Ausführen
+
+Im Repository-Root:
+
+```bash
+./scripts/check_frontend.sh .
+```
+
+Oder mit einem expliziten Pfad:
+
+```bash
+./scripts/check_frontend.sh /pfad/zum/plugin
+```
+
+Falls das Script nicht ausführbar ist:
+
+```bash
+chmod +x scripts/check_frontend.sh
+./scripts/check_frontend.sh .
+```
+
+### Was wird geprüft?
+
+Das Script prüft unter anderem:
+
+- ob das Template einen eindeutigen Plugin-Wrapper enthält, z. B. `.plugin-page`
+- ob eigene Buttons `data-role="none"` verwenden
+- ob eigene Button-Klassen vorhanden sind
+- ob die CSS-Datei ausgeglichene `{}` Klammern hat
+- ob die CSS-Datei den Plugin-Scope verwendet
+- ob CSS-Tokens wie `--plugin-primary` vorhanden sind
+- ob typische Copy/Paste-Fehler wie `ui-btnbefore`, `ui-btnafter`, `labelbefore` oder `labelafter` vorkommen
+- ob `index.cgi` per `perl -c` geprüft werden kann
+- ob `index.php` per `php -l` geprüft werden kann, falls `php-cli` installiert ist
+
+### Hinweis
+
+Der Check ersetzt keinen Test auf einem echten LoxBerry v3 oder v4. Er hilft aber, typische Struktur-, CSS- und Templatefehler vor einem Release früh zu finden.
+
 ## Release-Test
 
 - ZIP mit `unzip -t` prüfen.
