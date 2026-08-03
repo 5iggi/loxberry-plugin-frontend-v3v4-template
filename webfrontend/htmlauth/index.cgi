@@ -10,6 +10,12 @@ use LoxBerry::Web;
 
 my $cgi = CGI->new;
 
+if ($cgi->param('showlog')) {
+    my $viewer_path = plugin_ensure_logfile($cgi->param('showlog'));
+    print $cgi->redirect('/admin/system/tools/logfile.cgi?logfile=' . $viewer_path . '&header=html&format=template');
+    exit;
+}
+
 sub plugin_trim {
     my ($v) = @_;
     $v = '' if !defined $v;
@@ -36,6 +42,32 @@ sub plugin_template_path {
     }
     die "Template file not found: $name. Checked: " . join(', ', @candidates) . "\n";
 }
+
+sub plugin_log_path {
+    my ($name) = @_;
+    my $folder = plugin_folder();
+    $name ||= $folder;
+    $name =~ s/[^A-Za-z0-9_.-]//g;
+    $name = $folder if $name eq '';
+    my $logdir = "/opt/loxberry/log/plugins/$folder";
+    my $logfile = "$logdir/$name.log";
+    return ($logdir, $logfile, "plugins/$folder/$name.log");
+}
+
+sub plugin_ensure_logfile {
+    my ($name) = @_;
+    my ($logdir, $logfile, $viewer_path) = plugin_log_path($name);
+    if (!-d $logdir) {
+        mkdir $logdir, 0775;
+    }
+    if (!-e $logfile) {
+        open my $fh, '>>', $logfile;
+        close $fh if $fh;
+    }
+    chmod 0664, $logfile if -e $logfile;
+    return $viewer_path;
+}
+
 
 my $template = HTML::Template->new(
     filename          => plugin_template_path('index.html'),

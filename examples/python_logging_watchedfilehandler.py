@@ -12,7 +12,7 @@ def setup_logging(verbose=False):
     logdir = os.path.dirname(LOGFILE)
     if logdir:
         os.makedirs(logdir, exist_ok=True)
-    handler = WatchedFileHandler(LOGFILE, mode="a", encoding="utf-8")
+    handler = WatchedFileHandler(LOGFILE, mode="a", encoding="utf-8", delay=True)
     handler.setFormatter(logging.Formatter(LOGFORMAT))
     handler.setLevel(loglevel)
     root = logging.getLogger()

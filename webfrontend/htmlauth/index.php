@@ -20,6 +20,25 @@ function plugin_php_folder() {
     return basename(__DIR__);
 }
 
+
+function plugin_ensure_logfile($name = '') {
+    $folder = plugin_php_folder();
+    $name = preg_replace('/[^A-Za-z0-9_.-]/', '', (string)$name);
+    if ($name === '') {
+        $name = $folder;
+    }
+    $logdir = '/opt/loxberry/log/plugins/' . $folder;
+    $logfile = $logdir . '/' . $name . '.log';
+    if (!is_dir($logdir)) {
+        @mkdir($logdir, 0775, true);
+    }
+    if (!file_exists($logfile)) {
+        @touch($logfile);
+    }
+    @chmod($logfile, 0664);
+    return 'plugins/' . rawurlencode($folder) . '/' . rawurlencode($name . '.log');
+}
+
 function plugin_read_template($name) {
     $folder = plugin_php_folder();
     $candidates = [];
@@ -45,6 +64,11 @@ function plugin_render_template($template, array $vars) {
 }
 
 $notice = '';
+if (isset($_GET['showlog'])) {
+    $viewerPath = plugin_ensure_logfile($_GET['showlog']);
+    header('Location: /admin/system/tools/logfile.cgi?logfile=' . $viewerPath . '&header=html&format=template');
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
     $setting1 = trim($_POST['setting1'] ?? '');
     $setting2 = trim($_POST['setting2'] ?? '');

@@ -6,6 +6,7 @@
 - Custom buttons and button links use `data-role="none"`.
 - Reusable styles are moved to CSS.
 - Links open new tabs or windows only when intentional.
+- Check log link via `index.cgi?showlog=...` or `index.php?showlog=...`.
 - Demo buttons use PrimeIcons, e.g. `<i class="pi pi-check"></i>`.
 
 ## CSS
