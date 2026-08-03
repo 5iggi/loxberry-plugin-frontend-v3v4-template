@@ -19,8 +19,9 @@ This repository provides a small, neutral starting point for LoxBerry plugin fro
 - `data-role="none"` examples for custom buttons and form controls
 - CSS loading via `$htmlhead`
 - cache buster example
-- Perl CGI frontend example
+- Perl CGI frontend example with robust template path handling
 - PHP frontend example using `loxberry_web.php`, `loxberry_system.php` and language files
+- PrimeIcons example buttons
 - Python daemon logging example with `WatchedFileHandler`
 - frontend release checklist
 
@@ -47,7 +48,7 @@ The script checks template structure, scoped CSS, common jQuery Mobile artifacts
 - `webfrontend/html/css/plugin.css` - CSS base structure with a plugin scope, tokens and fallbacks
 - `templates/index.html` - Perl/HTML::Template example with `data-role="none"`
 - `templates/index_php.html` - PHP template example with v3/v4-compatible markup
-- `webfrontend/htmlauth/index.cgi` - minimal Perl CGI with CSS injection via `$htmlhead`
+- `webfrontend/htmlauth/index.cgi` - minimal Perl CGI with robust template path handling and CSS injection via `$htmlhead`
 - `webfrontend/htmlauth/index.php` - PHP frontend example using LoxBerry PHP SDK modules
 - `templates/lang/language_de.ini` and `templates/lang/language_en.ini` - language examples
 - `examples/python_logging_watchedfilehandler.py` - robust Python daemon logging example

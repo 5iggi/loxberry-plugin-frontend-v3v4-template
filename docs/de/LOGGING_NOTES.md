@@ -2,29 +2,12 @@
 
 ## Webfrontend
 
-CGI- oder PHP-Warnungen landen im Apache-Log. Häufige AJAX-Aufrufe können dadurch sehr schnell viele Logzeilen erzeugen.
+CGI- oder PHP-Warnungen landen im Apache-Log. Häufige AJAX-Aufrufe können sehr schnell viele Logzeilen erzeugen.
 
-Vermeide generische Funktionsnamen:
-
-```perl
-sub trim { ... }
-```
-
-Nutze stattdessen:
-
-```perl
-sub plugin_trim { ... }
-```
+Vermeide generische Funktionsnamen wie `trim()` und nutze Plugin-Präfixe, z. B. `plugin_trim()`.
 
 ## Python-Daemon
 
-Wenn ein Daemon in eine feste Datei schreibt, kann diese Datei extern gelöscht oder rotiert werden. Der Prozess schreibt dann eventuell weiter in einen gelöschten Filehandle.
+Das Beispiel `examples/python_logging_watchedfilehandler.py` ist optional und nur für Plugins mit Python-Daemon gedacht.
 
-Empfehlung:
-
-```python
-from logging.handlers import WatchedFileHandler
-handler = WatchedFileHandler(logfile, mode="a", encoding="utf-8")
-```
-
-`WatchedFileHandler` öffnet die Datei wieder neu, wenn sie extern ersetzt oder gelöscht wurde.
+`WatchedFileHandler` öffnet eine Logdatei neu, wenn sie extern rotiert, ersetzt oder gelöscht wurde.

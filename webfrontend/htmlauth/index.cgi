@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 use open qw(:std :encoding(UTF-8));
 use CGI;
+use FindBin qw($Bin);
 use HTML::Template;
 use LoxBerry::Web;
 
@@ -17,8 +18,27 @@ sub plugin_trim {
     return $v;
 }
 
+sub plugin_folder {
+    my ($folder) = $Bin =~ m{/plugins/([^/]+)$};
+    return $folder || 'PLUGINNAME';
+}
+
+sub plugin_template_path {
+    my ($name) = @_;
+    my $folder = plugin_folder();
+    my @candidates = (
+        "/opt/loxberry/templates/plugins/$folder/$name",
+        "$Bin/$name",
+        $name,
+    );
+    for my $path (@candidates) {
+        return $path if -r $path;
+    }
+    die "Template file not found: $name. Checked: " . join(', ', @candidates) . "\n";
+}
+
 my $template = HTML::Template->new(
-    filename          => 'index.html',
+    filename          => plugin_template_path('index.html'),
     global_vars       => 1,
     die_on_bad_params => 0,
     utf8              => 1,
@@ -38,11 +58,12 @@ $template->param(
     notice   => $notice,
 );
 
+my $folder       = plugin_folder();
 my $plugintitle  = 'PLUGINNAME';
 my $helplink     = 'https://wiki.loxberry.de';
 my $helptemplate = 'help.html';
 
-our $htmlhead = qq{<link rel="stylesheet" href="/plugins/PLUGINNAME/css/plugin.css?v=100">\n};
+our $htmlhead = qq{<link rel="stylesheet" href="/plugins/$folder/css/plugin.css?v=100">\n};
 LoxBerry::Web::lbheader($plugintitle, $helplink, $helptemplate);
 print $template->output();
 LoxBerry::Web::lbfooter();

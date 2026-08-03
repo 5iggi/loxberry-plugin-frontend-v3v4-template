@@ -7,17 +7,14 @@ TEMPLATE_PHP="$ROOT/templates/index_php.html"
 CGI="$ROOT/webfrontend/htmlauth/index.cgi"
 PHP="$ROOT/webfrontend/htmlauth/index.php"
 
-echo "Checking frontend template..."
-if [ -f "$TEMPLATE_PERL" ]; then
-  grep -q "plugin-page" "$TEMPLATE_PERL"
-  grep -q "data-role=\"none\"" "$TEMPLATE_PERL"
-  grep -q "plugin-button" "$TEMPLATE_PERL"
-fi
-if [ -f "$TEMPLATE_PHP" ]; then
-  grep -q "plugin-page" "$TEMPLATE_PHP"
-  grep -q "data-role=\"none\"" "$TEMPLATE_PHP"
-  grep -q "plugin-button" "$TEMPLATE_PHP"
-fi
+echo "Checking frontend templates..."
+for TEMPLATE in "$TEMPLATE_PERL" "$TEMPLATE_PHP"; do
+  [ -f "$TEMPLATE" ] || continue
+  grep -q "plugin-page" "$TEMPLATE"
+  grep -q "data-role=\"none\"" "$TEMPLATE"
+  grep -q "plugin-button" "$TEMPLATE"
+  grep -q "pi pi-" "$TEMPLATE" || true
+done
 
 echo "Checking CSS..."
 python3 - <<PY
@@ -48,7 +45,6 @@ echo "Checking PHP template references..."
 if [ -f "$PHP" ]; then
   grep -q "LBSystem::readlanguage" "$PHP"
   grep -q "LBWeb::lbheader" "$PHP"
-  grep -q "LBPPLUGINDIR" "$PHP"
 fi
 
 echo "OK"

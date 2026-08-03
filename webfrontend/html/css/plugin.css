@@ -40,10 +40,15 @@
   box-sizing: border-box;
 }
 
-.plugin-muted {
+.plugin-muted,
+.plugin-help {
   color: var(--plugin-muted);
   font-size: .95em;
   line-height: 1.4;
+}
+
+.plugin-help {
+  margin-top: .35em;
 }
 
 /* 03 Cards */
@@ -55,6 +60,10 @@
   background: transparent;
 }
 
+.plugin-hero-card h2 {
+  margin-top: .25em;
+}
+
 /* 04 Grid / form layout */
 .plugin-grid-2 {
   display: grid;
@@ -62,6 +71,7 @@
   gap: 14px 20px;
   max-width: 980px;
   align-items: start;
+  margin-bottom: .75em;
 }
 
 .plugin-field input[type="text"],
@@ -100,6 +110,10 @@
   flex-wrap: wrap;
   gap: 8px;
   margin: 0 0 .75em 0;
+}
+
+.plugin-actions-top {
+  justify-content: flex-start;
 }
 
 .plugin-page .plugin-button,
@@ -181,6 +195,11 @@
   background: var(--plugin-danger-hover) !important;
   border-color: var(--plugin-danger-hover) !important;
   color: #fff !important;
+}
+
+.plugin-page .plugin-button .pi,
+.plugin-page .plugin-card h3 .pi {
+  line-height: 1;
 }
 
 /* 06 jQuery Mobile compatibility guards */
