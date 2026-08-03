@@ -27,7 +27,7 @@ Die Vorlage ist bewusst kein vollstaendiges Plugin. Sie enthaelt die wiederverwe
 ## Schnellstart
 
 ```bash
-git clone https://github.com/YOURUSER/loxberry-plugin-frontend-v3v4-template.git
+git clone https://github.com/5iggi/loxberry-plugin-frontend-v3v4-template.git
 cd loxberry-plugin-frontend-v3v4-template
 ./scripts/check_frontend.sh .
 ```
