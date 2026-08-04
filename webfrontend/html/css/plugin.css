@@ -1,21 +1,44 @@
+/* ==========================================================================
+   LoxBerry Plugin Frontend v3/v4 Template
+   Scoped CSS. Keep all plugin-specific rules below .plugin-page.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   01 Theme variables and fallbacks
+   -------------------------------------------------------------------------- */
 .plugin-page {
   --plugin-font: var(--lb-font, var(--font-family, sans-serif));
   --plugin-text: var(--lb-text, var(--lb-color-text, #202124));
   --plugin-muted: var(--lb-text-muted, var(--lb-color-text-muted, #5f6368));
+  --plugin-border: var(--lb-border-color, var(--lb-color-border, #d8dce0));
+  --plugin-radius: var(--lb-radius, 4px);
+  --plugin-focus-ring: rgba(109, 172, 32, .24);
+
   --plugin-primary: var(--lb-btn-primary-bg, var(--lb-primary, var(--lb-color-primary, #6dac20)));
-  --plugin-primary-hover: var(--lb-primary-hover, var(--lb-btn-primary-hover-bg, #5a9a1a));
-  --plugin-primary-dark: var(--lb-primary-dark, var(--lb-primary-active, #4c7d18));
-  --plugin-danger: var(--lb-danger, var(--lb-color-danger, #dc2626));
-  --plugin-danger-hover: var(--lb-danger-hover, var(--lb-color-danger-hover, #b91c1c));
+  --plugin-primary-hover: var(--lb-btn-primary-hover-bg, var(--lb-primary-hover, #5a9a1a));
+  --plugin-primary-border: var(--lb-btn-primary-border, var(--plugin-primary-hover));
+  --plugin-primary-text: var(--lb-btn-primary-text, #fff);
+
+  --plugin-danger: var(--lb-btn-danger-bg, var(--lb-danger, var(--lb-color-danger, #d9534f)));
+  --plugin-danger-hover: var(--lb-btn-danger-hover-bg, var(--lb-danger-hover, #c9302c));
+  --plugin-danger-border: var(--lb-btn-danger-border, var(--plugin-danger-hover));
+  --plugin-danger-text: var(--lb-btn-danger-text, #fff);
+
   --plugin-btn-bg: var(--lb-btn-bg, #fff);
-  --plugin-btn-bg-hover: var(--lb-btn-hover-bg, #dcdcdc);
+  --plugin-btn-hover-bg: var(--lb-btn-hover-bg, #dcdcdc);
+  --plugin-btn-text: var(--lb-btn-text, var(--plugin-text));
   --plugin-btn-border: var(--lb-btn-border, #c0c0c0);
   --plugin-btn-border-hover: var(--lb-btn-hover-border, #a8a8a8);
-  --plugin-btn-radius: var(--lb-btn-radius, var(--lb-radius, 4px));
-  --plugin-border: var(--lb-border-color, var(--lb-color-border, #d8dce0));
-  --plugin-focus-ring: rgba(109, 172, 32, .24);
+  --plugin-btn-radius: var(--lb-btn-radius, var(--plugin-radius));
+
   --plugin-control-height: 40px;
   --plugin-control-width: 360px;
+}
+
+/* --------------------------------------------------------------------------
+   02 Base layout
+   -------------------------------------------------------------------------- */
+.plugin-page {
   box-sizing: border-box;
   max-width: 1080px;
   margin: 0 auto;
@@ -23,18 +46,367 @@
   color: var(--plugin-text);
   font-family: var(--plugin-font);
 }
-.plugin-page *, .plugin-page *::before, .plugin-page *::after { box-sizing: border-box; }
-.plugin-muted, .plugin-help { color: var(--plugin-muted); font-size: .95em; line-height: 1.4; }
-.plugin-help { margin-top: .35em; }
-.plugin-card { margin: 0 0 1em 0; padding: 14px; border: 1px solid var(--plugin-border); border-radius: 4px; background: transparent; }
-.plugin-grid-2 { display: grid; grid-template-columns: minmax(260px,1fr) minmax(260px,1fr); gap: 14px 20px; max-width: 980px; align-items: start; margin-bottom: .75em; }
-.plugin-field input[type="text"], .plugin-field input[type="password"], .plugin-field input[type="number"], .plugin-field select, .plugin-field textarea { display: block !important; width: 100% !important; max-width: var(--plugin-control-width) !important; min-height: var(--plugin-control-height) !important; margin: 0 !important; padding: 8px 10px !important; border: 1px solid var(--plugin-border) !important; border-radius: 4px !important; background: #fff !important; color: var(--plugin-text) !important; text-shadow: none !important; box-shadow: inset 0 1px 2px rgba(0,0,0,.05) !important; outline: none !important; }
-.plugin-field input:focus, .plugin-field select:focus, .plugin-field textarea:focus { border-color: var(--plugin-primary) !important; box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0,0,0,.05) !important; }
-.plugin-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 .75em 0; }
-.plugin-page .plugin-button, .plugin-page a.plugin-button, .plugin-page button.plugin-button, .plugin-page .ui-link.plugin-button, .plugin-page .ui-btn.plugin-button { appearance: none !important; -webkit-appearance: none !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: .45em !important; width: auto !important; min-width: 10rem !important; min-height: var(--plugin-control-height) !important; margin: .35em .45em .35em 0 !important; padding: .55em .9em !important; border: 1px solid var(--plugin-btn-border) !important; border-radius: var(--plugin-btn-radius) !important; background: var(--plugin-btn-bg) !important; color: var(--plugin-text) !important; line-height: 1.3 !important; text-decoration: none !important; text-shadow: none !important; cursor: pointer !important; box-shadow: none !important; background-image: none !important; }
-.plugin-page .plugin-button:hover { background: var(--plugin-btn-bg-hover) !important; border-color: var(--plugin-btn-border-hover) !important; }
-.plugin-page .plugin-button-primary { background: var(--plugin-primary) !important; border-color: var(--plugin-primary-dark) !important; color: #fff !important; }
-.plugin-page .plugin-button-danger { background: var(--plugin-danger) !important; border-color: var(--plugin-danger) !important; color: #fff !important; }
-.plugin-page .plugin-button .pi, .plugin-page .plugin-card h3 .pi { line-height: 1; }
-.plugin-page .ui-btn, .plugin-page .ui-link { text-shadow: none !important; }
-@media (max-width: 900px) { .plugin-page { padding: .5rem; } .plugin-grid-2 { grid-template-columns: 1fr; } .plugin-page .plugin-button, .plugin-page a.plugin-button, .plugin-page button.plugin-button, .plugin-field input[type="text"], .plugin-field input[type="password"], .plugin-field input[type="number"], .plugin-field select, .plugin-field textarea { width: 100% !important; max-width: 100% !important; } }
+
+.plugin-page *,
+.plugin-page *::before,
+.plugin-page *::after {
+  box-sizing: border-box;
+}
+
+.plugin-muted,
+.plugin-help {
+  color: var(--plugin-muted);
+  font-size: .95em;
+  line-height: 1.4;
+}
+
+.plugin-help {
+  margin-top: .35em;
+}
+
+/* --------------------------------------------------------------------------
+   03 Cards and page sections
+   -------------------------------------------------------------------------- */
+.plugin-card {
+  margin: 0 0 1em 0;
+  padding: 14px;
+  border: 1px solid var(--plugin-border);
+  border-radius: var(--plugin-radius);
+  background: transparent;
+}
+
+.plugin-hero-card h2 {
+  margin-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   04 Service bar
+   -------------------------------------------------------------------------- */
+.plugin-servicebar {
+  text-align: center;
+}
+
+.plugin-service-actions,
+.plugin-service-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: .65em;
+}
+
+.plugin-service-status {
+  gap: 1.25em;
+}
+
+/* --------------------------------------------------------------------------
+   05 Forms
+   -------------------------------------------------------------------------- */
+.plugin-grid-2 {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
+  gap: 14px 20px;
+  max-width: 980px;
+  margin-bottom: .75em;
+}
+
+.plugin-field input[type="text"],
+.plugin-field input[type="password"],
+.plugin-field input[type="number"],
+.plugin-field select,
+.plugin-field textarea {
+  display: block !important;
+  width: 100% !important;
+  max-width: var(--plugin-control-width) !important;
+  min-height: var(--plugin-control-height) !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  border: 1px solid var(--plugin-border) !important;
+  border-radius: var(--plugin-radius) !important;
+  background: #fff !important;
+  color: var(--plugin-text) !important;
+  text-shadow: none !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .05) !important;
+  outline: none !important;
+}
+
+.plugin-field input:focus,
+.plugin-field select:focus,
+.plugin-field textarea:focus {
+  border-color: var(--plugin-primary) !important;
+  box-shadow: 0 0 0 3px var(--plugin-focus-ring), inset 0 1px 2px rgba(0, 0, 0, .05) !important;
+}
+
+/* --------------------------------------------------------------------------
+   06 Buttons and PrimeIcons
+   -------------------------------------------------------------------------- */
+.plugin-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 .75em 0;
+}
+
+.plugin-page .plugin-button,
+.plugin-page a.plugin-button,
+.plugin-page button.plugin-button,
+.plugin-page .ui-link.plugin-button,
+.plugin-page .ui-btn.plugin-button {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .45em !important;
+  width: auto !important;
+  min-width: 10rem !important;
+  min-height: var(--plugin-control-height) !important;
+  margin: .35em .45em .35em 0 !important;
+  padding: .55em .9em !important;
+  border: 1px solid var(--plugin-btn-border) !important;
+  border-radius: var(--plugin-btn-radius) !important;
+  background: var(--plugin-btn-bg) !important;
+  color: var(--plugin-btn-text) !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.plugin-page .plugin-button:hover {
+  background: var(--plugin-btn-hover-bg) !important;
+  border-color: var(--plugin-btn-border-hover) !important;
+}
+
+.plugin-page .lb-btn.plugin-button.plugin-button-primary,
+.plugin-page .lb-btn-primary.plugin-button,
+.plugin-page button.lb-btn.plugin-button.plugin-button-primary,
+.plugin-page button.lb-btn-primary.plugin-button {
+  background: var(--lb-btn-primary-bg, var(--plugin-primary)) !important;
+  border-color: var(--plugin-primary-border) !important;
+  color: var(--plugin-primary-text) !important;
+}
+
+.plugin-page .lb-btn.plugin-button.plugin-button-primary:hover,
+.plugin-page .lb-btn-primary.plugin-button:hover,
+.plugin-page button.lb-btn.plugin-button.plugin-button-primary:hover,
+.plugin-page button.lb-btn-primary.plugin-button:hover {
+  background: var(--plugin-primary-hover) !important;
+  border-color: var(--plugin-primary-hover) !important;
+  color: var(--plugin-primary-text) !important;
+}
+
+.plugin-page .plugin-button-danger,
+.plugin-page .lb-btn.plugin-button.plugin-button-danger,
+.plugin-page button.lb-btn.plugin-button.plugin-button-danger {
+  background: var(--lb-danger, var(--plugin-danger)) !important;
+  border-color: var(--plugin-danger-border) !important;
+  color: var(--plugin-danger-text) !important;
+}
+
+.plugin-page .plugin-button-danger:hover,
+.plugin-page .lb-btn.plugin-button.plugin-button-danger:hover,
+.plugin-page button.lb-btn.plugin-button.plugin-button-danger:hover {
+  background: var(--plugin-danger-hover) !important;
+  border-color: var(--plugin-danger-hover) !important;
+  color: var(--plugin-danger-text) !important;
+}
+
+.plugin-page .plugin-button .pi,
+.plugin-page .plugin-card h3 .pi,
+.plugin-page .plugin-loglist .pi {
+  line-height: 1;
+}
+
+.plugin-page .ui-btn,
+.plugin-page .ui-link {
+  text-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   07 LoxBerry generated log list
+   -------------------------------------------------------------------------- */
+.plugin-loglist {
+  margin-top: 1em;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible {
+  border: 1px solid var(--plugin-border) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin: 1em 0 !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading {
+  margin: 0 !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-toggle {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: .55em !important;
+  min-height: 46px !important;
+  padding: .75em 3.25em .75em 1em !important;
+  border: 0 !important;
+  border-bottom: 2px solid var(--plugin-primary) !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: var(--plugin-text) !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-toggle:hover {
+  background: #f7f7f7 !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-toggle > span:not(.ui-collapsible-heading-status) {
+  margin-left: .35em !important;
+  margin-right: 0 !important;
+  flex: 0 1 auto !important;
+  white-space: nowrap !important;
+  color: var(--plugin-muted) !important;
+  font-weight: 600 !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-status {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  white-space: nowrap !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-toggle::after,
+.plugin-page .plugin-loglist .ui-btn-icon-right::after {
+  right: 1em !important;
+  top: 50% !important;
+  margin-top: -9px !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-heading-toggle .plugin-loglist-pi {
+  display: none !important;
+}
+
+.plugin-page .plugin-loglist .ui-collapsible-content {
+  border: 0 !important;
+  background: #fff !important;
+  padding: 1em !important;
+}
+
+.plugin-page .plugin-loglist .ui-field-contain {
+  border: 0 !important;
+  margin: .5em 0 1.25em 0 !important;
+  padding: 0 !important;
+}
+
+.plugin-page .plugin-loglist .ui-select .ui-btn {
+  background: #fff !important;
+  color: var(--plugin-text) !important;
+  border: 1px solid var(--plugin-border) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.plugin-page .plugin-loglist table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border: 1px solid var(--plugin-border) !important;
+}
+
+.plugin-page .plugin-loglist table td {
+  border-top: 1px solid var(--plugin-border) !important;
+  padding: .55em .75em !important;
+  vertical-align: middle !important;
+}
+
+.plugin-page .plugin-loglist td a[href*="logfile.cgi"],
+.plugin-page .plugin-loglist a[href*="logfile.cgi"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .45em !important;
+  min-height: 38px !important;
+  min-width: 8rem !important;
+  width: auto !important;
+  margin: .15em 0 !important;
+  padding: .5em .85em !important;
+  border: 1px solid var(--plugin-btn-border) !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: var(--plugin-text) !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.plugin-page .plugin-loglist a[href*="logfile.cgi"]:hover {
+  background: var(--plugin-btn-hover-bg) !important;
+  border-color: var(--plugin-btn-border-hover) !important;
+}
+
+.plugin-page .plugin-loglist .ui-btn-icon-left::after,
+.plugin-page .plugin-loglist .ui-icon-action::after {
+  display: none !important;
+}
+
+.plugin-page .plugin-loglist .ui-btn-icon-left {
+  padding-left: .85em !important;
+}
+
+.plugin-page .plugin-loglist-pi {
+  margin-right: .35em;
+}
+
+/* --------------------------------------------------------------------------
+   08 Responsive rules
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .plugin-page {
+    padding: .5rem;
+  }
+
+  .plugin-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .plugin-page .plugin-button,
+  .plugin-page a.plugin-button,
+  .plugin-page button.plugin-button,
+  .plugin-field input[type="text"],
+  .plugin-field input[type="password"],
+  .plugin-field input[type="number"],
+  .plugin-field select,
+  .plugin-field textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .plugin-page .plugin-loglist .ui-collapsible-heading-toggle {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: .15em !important;
+    padding-right: 3.25em !important;
+  }
+
+  .plugin-page .plugin-loglist .ui-collapsible-heading-toggle > span:not(.ui-collapsible-heading-status) {
+    margin-left: 0 !important;
+  }
+}

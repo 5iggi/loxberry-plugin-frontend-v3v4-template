@@ -1,10 +1,32 @@
 <div class="lb-content plugin-page plugin-form-{{FORM}}">
-
   <section class="lb-card plugin-card plugin-hero-card">
     <h2>{{APP.TITLE}}</h2>
     <p class="plugin-muted">{{APP.SUBTITLE}}</p>
   </section>
 
+  {{SERVICE_BAR}}
   {{CONTENT}}
 
+<script>
+(function () {
+  function decorateLogButtons() {
+    document
+      .querySelectorAll('.plugin-page .plugin-loglist a[href*="logfile.cgi"]')
+      .forEach(function (anchor) {
+        if (anchor.dataset.piDecorated === '1') return;
+        var icon = document.createElement('i');
+        icon.className = 'pi pi-external-link plugin-loglist-pi';
+        icon.setAttribute('aria-hidden', 'true');
+        anchor.insertBefore(icon, anchor.firstChild);
+        anchor.dataset.piDecorated = '1';
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', decorateLogButtons);
+  } else {
+    decorateLogButtons();
+  }
+})();
+</script>
 </div>

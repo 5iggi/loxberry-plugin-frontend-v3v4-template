@@ -1,189 +1,109 @@
-# Hinweise zur Log-Datei-Erstellung in LoxBerry-Plugins
+# Logging-Guidelines für LoxBerry-Plugins
 
-Diese Hinweise fassen allgemeine Empfehlungen für zukünftige LoxBerry-Plugins zusammen. Ziel ist eine robuste Log-Ausgabe, die sowohl mit dem LoxBerry Log Manager als auch mit dauerhaft laufenden Diensten zuverlässig zusammenspielt.
+## Ziel
 
-## Grundsätze
+Diese Hinweise fassen neutrale Empfehlungen für robuste Logs in LoxBerry-Plugins zusammen. Sie berücksichtigen insbesondere, dass LoxBerry Logs aktiv verwaltet und bereinigt.
 
-- Plugin-Logs sollten im vorgesehenen Plugin-Logverzeichnis abgelegt werden:
+## Logverzeichnis
+
+Plugin-Logs gehören grundsätzlich in:
 
 ```text
 /opt/loxberry/log/plugins/<pluginname>/
 ```
 
-- Das Plugin sollte das Logverzeichnis bei Installation und bei Bedarf auch zur Laufzeit erzeugen.
-- Eine Logdatei sollte nicht erst beim ersten echten Ereignis entstehen, sondern bereits bei Installation oder beim ersten Öffnen der Logansicht vorhanden sein.
-- Für dauerhaft laufende Dienste sollte berücksichtigt werden, dass Logdateien extern gelöscht oder rotiert werden können.
-- Webfrontend-Logs, Installationslogs und Daemon-Logs sollten möglichst getrennt betrachtet werden.
+Das Logverzeichnis kann bei Installation oder bei Bedarf zur Laufzeit erstellt werden. Ein Plugin sollte aber nicht davon ausgehen, dass dort abgelegte Dateien dauerhaft erhalten bleiben.
 
-## Empfohlene Struktur
+## LoxBerry bereinigt Logs
 
-```text
-/opt/loxberry/log/plugins/<pluginname>/<pluginname>.log
-/opt/loxberry/log/plugins/<pluginname>/<weitere-session-logs>.log
-```
+LoxBerry kann Logdateien automatisch kürzen oder löschen, wenn:
 
-Beispiel:
+- Logdateien alt sind,
+- Logdateien sehr groß sind,
+- im Logbereich bzw. tmpfs/RAM-Disk zu wenig Platz frei ist.
 
-```text
-/opt/loxberry/log/plugins/myplugin/myplugin.log
-```
+Der Log Manager zeigt im Bereich „Logfiles“ vor allem Logging-Sessions. Das ist nicht identisch mit einer rohen Dateiliste. Eine Session kann sichtbar sein, obwohl die zugrunde liegende Datei bereits gekürzt oder gelöscht wurde.
 
-## Installation und Update
+## Logdatenbank
 
-Installations- oder Root-Skripte sollten das Logverzeichnis und eine leere Logdatei sicher anlegen.
+LoxBerry führt eine Logdatenbank. Diese Datenbank wird für die Loglisten und den Log Manager verwendet. Wenn die Datenbank nicht beschreibbar ist, z. B. wegen vollem tmpfs, kann die Logerstellung fehlschlagen.
 
-Beispiel für `postinstall.sh` oder `postroot.sh`:
+Prüfpunkte:
 
 ```bash
-LOGDIR="$PLOGS"
-LOGFILE="$LOGDIR/myplugin.log"
-
-mkdir -p "$LOGDIR"
-
-if [ ! -f "$LOGFILE" ]; then
-    touch "$LOGFILE" || true
-fi
-
-chmod 664 "$LOGFILE" 2>/dev/null || true
+df -h /tmp /opt/loxberry/log 2>/dev/null
+ls -lh /opt/loxberry/log/plugins/<pluginname>/
 ```
 
-Wenn das Skript als `root` läuft, können zusätzlich Besitzer und Gruppe gesetzt werden:
+## Session-Logs
+
+Für Aktionen sollten bevorzugt Session-Logs über das LoxBerry Logging SDK erstellt werden.
+
+Beispiel für Bash:
 
 ```bash
-chown loxberry:loxberry "$LOGFILE" 2>/dev/null || true
+. "$LBHOMEDIR/libs/bashlib/loxberry_log.sh"
+PACKAGE="$PLUGIN"
+NAME="action"
+FILENAME="$LBPLOG/$PLUGIN/action.log"
+APPEND=1
+LOGSTART "Action started."
+LOGINF "Doing something."
+LOGOK "Action finished."
+LOGEND "Action finished."
 ```
 
-## Logdatei vor der Anzeige sicherstellen
+Wichtig:
 
-Wenn im Webfrontend ein Button „Log anzeigen“ vorhanden ist, sollte nicht direkt blind auf den LoxBerry Log Viewer verlinkt werden, falls die Datei fehlen kann.
+- `PACKAGE` entspricht dem Plugin-Folder.
+- `NAME` ist die Loggruppe.
+- `FILENAME` muss gesetzt sein.
+- `LOGEND` sollte bei abgeschlossenen Aktionen gesetzt werden.
 
-Besser ist ein Zwischenschritt im `index.cgi`:
+## Daemon-Logs
 
-1. Logverzeichnis prüfen oder anlegen.
-2. Logdatei prüfen oder anlegen.
-3. Danach auf den LoxBerry Log Viewer weiterleiten.
+Ein Daemon kann eine eigene dauerhafte Logdatei schreiben. Diese Datei kann jedoch durch LoxBerry oder externe Logpflege gelöscht oder rotiert werden.
 
-Beispielprinzip:
+Empfehlungen:
 
-```perl
-if ($cgi->param('showlog')) {
-    my $logdir  = '/opt/loxberry/log/plugins/myplugin';
-    my $logfile = "$logdir/myplugin.log";
+- Daemon kann beim Start das Logverzeichnis sicherstellen.
+- Daemon sollte gegen gelöschte oder rotierte Logdateien robust sein.
+- Ein Dienstneustart sollte das Logfile wieder anlegen können.
+- Logs nicht als Zustandsspeicher verwenden.
 
-    mkdir $logdir if !-d $logdir;
+## Python-Daemons
 
-    if (!-e $logfile) {
-        open my $fh, '>>', $logfile;
-        close $fh if $fh;
-        chmod 0664, $logfile;
-    }
-
-    print $cgi->redirect('/admin/system/tools/logfile.cgi?logfile=plugins/myplugin/myplugin.log&header=html&format=template');
-    exit;
-}
-```
-
-Der Button im Template zeigt dann auf das eigene CGI:
-
-```html
-<a href="index.cgi?showlog=daemon">Log anzeigen</a>
-```
-
-## Dauerhaft laufende Python-Dienste
-
-Bei dauerhaft laufenden Python-Diensten sollte kein einfacher `FileHandler` verwendet werden, wenn die Logdatei extern gelöscht oder rotiert werden kann.
-
-Empfohlen ist `WatchedFileHandler`:
+Für Python-Daemons ist `WatchedFileHandler` eine robuste Option:
 
 ```python
-import logging
 from logging.handlers import WatchedFileHandler
-
 handler = WatchedFileHandler(
     "/opt/loxberry/log/plugins/myplugin/myplugin.log",
     encoding="utf-8",
     delay=True,
 )
-
-formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
-handler.setFormatter(formatter)
-
-root = logging.getLogger()
-root.addHandler(handler)
-root.setLevel(logging.INFO)
 ```
 
-`WatchedFileHandler` hilft, wenn eine Logdatei extern gelöscht oder rotiert wurde. Beim nächsten Logeintrag wird die Datei wieder geöffnet.
+Der Handler erkennt, wenn eine Logdatei von außen ersetzt oder rotiert wurde, und öffnet die Datei neu.
 
-## Wichtiger Hinweis zu gelöschten Logdateien
+## Gelöschte offene Logdateien
 
-Wenn eine Logdatei gelöscht wird, während ein Prozess sie noch geöffnet hat, kann der Prozess weiter in einen gelöschten Filehandle schreiben. Das sieht zum Beispiel so aus:
-
-```text
-/opt/loxberry/log/plugins/myplugin/myplugin.log (deleted)
-```
+Wenn ein Prozess eine Logdatei offen hält und die Datei außerhalb des Prozesses gelöscht wird, kann der Prozess weiter in einen gelöschten Filehandle schreiben. Die Datei ist dann im Verzeichnis nicht mehr sichtbar, belegt aber weiterhin Speicher.
 
 Prüfung:
-
-```bash
-PID=$(systemctl show -p MainPID --value myplugin.service)
-sudo ls -l /proc/$PID/fd | grep -i deleted
-```
-
-In diesem Fall hilft kurzfristig ein Neustart des Dienstes. Dauerhaft sollte die Anwendung einen robusten Loghandler verwenden und die Logdatei vor der Anzeige im Webfrontend sicherstellen.
-
-## LoxBerry-Session-Logs
-
-Für Webfrontend-Aktionen, Installationsschritte und Skriptaufrufe sind LoxBerry-Session-Logs oft besser geeignet als ein dauerhaftes Einzel-Logfile.
-
-Typische Einsatzbereiche:
-
-- Konfiguration speichern
-- Dienst starten, stoppen oder neu starten
-- Export-Funktionen
-- Installations- und Update-Skripte
-- Diagnose-Aktionen
-
-Für solche Aktionen kann das LoxBerry Logging SDK verwendet werden. Ein dauerhaft laufender Daemon kann zusätzlich ein eigenes Daemon-Log behalten.
-
-## Empfehlungen für neue Plugins
-
-- Logverzeichnis und Logdatei bereits bei Installation anlegen.
-- Bei Loganzeige im Webfrontend die Logdatei vorher sicherstellen.
-- Bei Python-Daemons `WatchedFileHandler` verwenden.
-- Für Webfrontend- und Skriptaktionen LoxBerry-Session-Logs nutzen.
-- Logdateien nicht unkontrolliert anwachsen lassen.
-- Keine generischen Hilfsfunktionen wie `trim()` im CGI verwenden, wenn Namenskollisionen möglich sind. Besser plugin-spezifische Namen verwenden, z. B. `myplugin_trim()`.
-- Logdateien und Loglinks regelmäßig mit dem LoxBerry Log Manager testen.
-
-## Prüfbefehle
-
-```bash
-ls -lh /opt/loxberry/log/plugins/<pluginname>/
-```
 
 ```bash
 PID=$(systemctl show -p MainPID --value <service>.service)
 sudo ls -l /proc/$PID/fd | grep -i deleted
 ```
 
-```bash
-journalctl -u <service>.service --since "10 minutes ago" --no-pager
-```
+Kurzfristig hilft ein Dienstneustart. Langfristig sollte der Dienst das Logfile robust neu öffnen können.
 
-```bash
-perl -c /opt/loxberry/webfrontend/htmlauth/plugins/<pluginname>/index.cgi
-```
+## Empfehlungen
 
-```bash
-python3 -m py_compile /opt/loxberry/bin/plugins/<pluginname>/<daemon>.py
-```
-
-## Kurzfassung
-
-Für robuste LoxBerry-Plugin-Logs sollte ein Plugin die Logdatei nicht nur schreiben, sondern auch deren Lebenszyklus berücksichtigen:
-
-- bei Installation anlegen,
-- vor Anzeige sicherstellen,
-- bei Daemons mit externem Löschen oder Rotation umgehen,
-- Webfrontend-Aktionen separat als LoxBerry-Session-Logs erfassen.
+- Logs nur für Diagnose verwenden, nicht als Datenbank.
+- Aktionen als LoxBerry-Session-Logs erfassen.
+- Daemon-Logs klein halten und robust neu öffnen können.
+- Loganzeige immer über LoxBerry-Funktionen oder Logviewer realisieren.
+- Manuell kopierte Logdateien nicht als Grundlage für `loglist_html()` verwenden.
+- Logverhalten regelmäßig unter LoxBerry v3 und v4 testen.

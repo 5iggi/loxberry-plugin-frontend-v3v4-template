@@ -8,23 +8,22 @@ Wiederverwendbare neutrale Frontend-Vorlage für LoxBerry-Plugins, die unter Lox
 
 - Deutsch: [docs/de/README.md](docs/de/README.md)
 - English: [docs/en/README.md](docs/en/README.md)
+- Sources / Quellen: [docs/SOURCES.md](docs/SOURCES.md)
 
 ## Repository purpose
 
-This repository provides a small, neutral starting point for LoxBerry plugin frontends:
+This repository provides a neutral starting point for LoxBerry plugin frontends:
 
 - scoped CSS for plugin pages
-- v4-style CSS variables with v3 fallbacks
+- LoxBerry-v4-style CSS variables with fallbacks for LoxBerry v3
 - jQuery Mobile compatibility guards
-- `data-role="none"` examples for custom buttons and form controls
-- CSS loading via `$htmlhead`
-- cache buster example
-- Perl CGI frontend example with robust template path handling
-- PHP frontend example using `loxberry_web.php`, `loxberry_system.php` and language files
-- horizontal LoxBerry navbar examples for Perl and PHP
-- PrimeIcons example buttons
-- LoxBerry-friendly logging examples
-- optional Python daemon logging example with `WatchedFileHandler`
+- `data-role="none"` examples for custom controls
+- CSS loading through `$htmlhead`
+- Perl CGI and PHP frontend examples
+- horizontal LoxBerry navbar examples
+- PrimeIcons in own buttons
+- scoped styling for LoxBerry-generated log lists
+- LoxBerry Logging SDK examples and notes
 - frontend release checklist
 
 ## Quick start
@@ -35,7 +34,7 @@ This repository provides a small, neutral starting point for LoxBerry plugin fro
    - Perl CGI: `webfrontend/htmlauth/index.cgi` with `templates/index.html`
    - PHP: `webfrontend/htmlauth/index.php` with `templates/index_php.html`
 4. Adapt `webfrontend/html/css/plugin.css`.
-5. Load your CSS from the frontend via `$htmlhead` before calling `lbheader()`.
+5. Load the CSS via `$htmlhead` before calling `lbheader()`.
 6. Run the frontend check:
 
 ```bash
@@ -52,8 +51,7 @@ chmod +x scripts/check_frontend.sh
 - `webfrontend/htmlauth/index.php`
 - `templates/lang/language_de.ini`
 - `templates/lang/language_en.ini`
-- `postinstall.sh`
-- `postroot.sh`
+- `bin/create_demo_log.sh`
 - `examples/python_logging_watchedfilehandler.py`
 - `scripts/check_frontend.sh`
 

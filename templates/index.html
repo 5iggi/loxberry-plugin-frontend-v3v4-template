@@ -1,25 +1,59 @@
 <div class="lb-content plugin-page plugin-form-<TMPL_VAR FORM>">
 
+  <!-- =====================================================================
+       Header
+       ===================================================================== -->
   <section class="lb-card plugin-card plugin-hero-card">
     <h2><TMPL_VAR APP_TITLE></h2>
     <p class="plugin-muted"><TMPL_VAR APP_SUBTITLE></p>
   </section>
 
+  <!-- =====================================================================
+       Service controls
+       ===================================================================== -->
+  <section class="lb-card plugin-card plugin-servicebar">
+    <div class="plugin-service-actions">
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?action=restart&amp;form=<TMPL_VAR FORM>">
+        <i class="pi pi-refresh"></i><span><TMPL_VAR BUTTON_RESTART></span>
+      </a>
+      <a class="lb-btn plugin-button plugin-button-danger" data-role="none" href="index.cgi?action=stop&amp;form=<TMPL_VAR FORM>">
+        <i class="pi pi-stop-circle"></i><span><TMPL_VAR BUTTON_STOP></span>
+      </a>
+    </div>
+    <div class="plugin-service-status">
+      <span class="plugin-muted"><TMPL_VAR LABEL_STATUS>: <strong><TMPL_VAR SERVICE_STATUS></strong></span>
+      <span class="plugin-muted"><TMPL_VAR LABEL_PID>: <strong><TMPL_VAR SERVICE_PID></strong></span>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       Main page
+       ===================================================================== -->
 <TMPL_IF FORM_MAIN>
   <section class="lb-card plugin-card">
     <h3><i class="pi pi-home"></i> <TMPL_VAR NAV_MAIN></h3>
     <p class="plugin-muted"><TMPL_VAR MAIN_TEXT></p>
     <div class="plugin-actions">
-      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=settings"><i class="pi pi-cog"></i><span><TMPL_VAR NAV_SETTINGS></span></a>
-      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=log"><i class="pi pi-file"></i><span><TMPL_VAR NAV_LOG></span></a>
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=settings">
+        <i class="pi pi-cog"></i><span><TMPL_VAR NAV_SETTINGS></span>
+      </a>
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?form=log">
+        <i class="pi pi-file"></i><span><TMPL_VAR NAV_LOG></span>
+      </a>
     </div>
   </section>
 </TMPL_IF>
 
+  <!-- =====================================================================
+       Settings page
+       ===================================================================== -->
 <TMPL_IF FORM_SETTINGS>
   <section class="lb-card plugin-card">
     <h3><i class="pi pi-cog"></i> <TMPL_VAR CARD_SETTINGS></h3>
+
     <form method="post" action="index.cgi?form=settings" data-role="none">
+      <input type="hidden" name="form" value="settings">
+
       <div class="plugin-grid-2">
         <div class="plugin-field lb-form-row">
           <label class="lb-form-label" for="setting1"><TMPL_VAR FORM_SETTING1></label>
@@ -28,6 +62,7 @@
             <div class="plugin-help"><TMPL_VAR HELP_TEXT></div>
           </div>
         </div>
+
         <div class="plugin-field lb-form-row">
           <label class="lb-form-label" for="setting2"><TMPL_VAR FORM_SETTING2></label>
           <div class="lb-form-field">
@@ -36,22 +71,76 @@
           </div>
         </div>
       </div>
+
       <div class="plugin-actions">
-        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none"><i class="pi pi-check"></i><span><TMPL_VAR BUTTON_SAVE></span></button>
+        <button type="submit" name="save" value="1" class="lb-btn lb-btn-primary plugin-button plugin-button-primary" data-role="none">
+          <i class="pi pi-check"></i><span><TMPL_VAR BUTTON_SAVE></span>
+        </button>
       </div>
     </form>
+
     <div class="plugin-status plugin-muted"><TMPL_VAR notice></div>
   </section>
 </TMPL_IF>
 
+  <!-- =====================================================================
+       Log page
+       ===================================================================== -->
 <TMPL_IF FORM_LOG>
   <section class="lb-card plugin-card">
     <h3><i class="pi pi-file"></i> <TMPL_VAR NAV_LOG></h3>
     <p class="plugin-muted"><TMPL_VAR LOG_TEXT></p>
+
     <div class="plugin-actions">
-      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?showlog=plugin" target="plugin_log"><i class="pi pi-external-link"></i><span><TMPL_VAR BUTTON_OPEN_LOG></span></a>
+      <a class="lb-btn plugin-button" data-role="none" href="index.cgi?action=createdemolog&amp;form=log">
+        <i class="pi pi-plus-circle"></i><span><TMPL_VAR BUTTON_CREATE_DEMO_LOG></span>
+      </a>
     </div>
+
+    <div class="plugin-loglist"><TMPL_VAR LOGLIST></div>
   </section>
 </TMPL_IF>
 
+  <!-- =====================================================================
+       Small UI helpers for generated LoxBerry output
+       ===================================================================== -->
+<script>
+(function () {
+  function decorateLogButtons() {
+    document
+      .querySelectorAll('.plugin-page .plugin-loglist a[href*="logfile.cgi"]')
+      .forEach(function (anchor) {
+        if (anchor.dataset.piDecorated === '1') return;
+        var icon = document.createElement('i');
+        icon.className = 'pi pi-external-link plugin-loglist-pi';
+        icon.setAttribute('aria-hidden', 'true');
+        anchor.insertBefore(icon, anchor.firstChild);
+        anchor.dataset.piDecorated = '1';
+      });
+  }
+
+  function keepCgiNavbarActive() {
+    var form = document.querySelector('.plugin-form-settings')
+      ? 'settings'
+      : (document.querySelector('.plugin-form-log') ? 'log' : 'main');
+
+    document.querySelectorAll('a[href*="index.cgi?form="]').forEach(function (anchor) {
+      var isActive = anchor.href.indexOf('form=' + form) !== -1;
+      anchor.classList.toggle('ui-btn-active', isActive);
+      anchor.classList.toggle('active', isActive);
+    });
+  }
+
+  function run() {
+    decorateLogButtons();
+    keepCgiNavbarActive();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
 </div>
